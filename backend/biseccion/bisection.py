@@ -5,7 +5,7 @@ def bisection(function:str,point1,point2, iteration):
     iteration-=1
     middle=(point1+point2)/2
     if iteration==0:
-          return [middle,0]
+          return [middle,iteration]
     if f(middle)==0:
         return [middle,iteration]
     if f(point1)*f(middle)<0:
