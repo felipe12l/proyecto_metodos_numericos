@@ -25,5 +25,6 @@ class manager_bisection:
             return self.bisection(self.function,self.point1,middle,iteration)
         else:
             return self.bisection(self.function,middle,self.point2,iteration)
-    
+  
+        
         
