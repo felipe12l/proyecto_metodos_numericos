@@ -1,4 +1,5 @@
 from sympy import symbols, diff, lambdify,sympify
+from flask import Flask
 
 class newton:
     def __init__(self,function:str,point,iterations,var):
@@ -23,6 +24,5 @@ class newton:
             self.point=self.point-self.function(self.point)/der(self.point)
             self.iterations-=1
         return self.point
-newtons=newton("x**3-x-1",1,10,"x")
-print(newtons.calculate_newton())
-        
+    
+
