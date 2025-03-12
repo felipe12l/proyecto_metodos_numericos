@@ -2,8 +2,8 @@ FROM python:3.8
 
 WORKDIR /app
 
-COPY fixedPoint.py
+COPY fixed_point.py .
 
 RUN pip install flask
 
-CMD ["python", "fixedPoint.py"]
+CMD ["python", "fixed_point.py"]

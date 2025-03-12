@@ -5,8 +5,8 @@ import numpy as np
 app = Flask(__name__)
 
 
-@app.route('/fixedPoint', methods=['POST'])
-def fixedPoint():
+@app.route('/fixed_point', methods=['POST'])
+def fixed_foint():
 
     data = request.get_json()
 
@@ -47,7 +47,7 @@ def fixedPoint():
     tolerancia = error_porcentaje / 100.0
 
     # Definimos una función que evalúa la función derivada en un valor 'x'
-    def transformedFunction(x):
+    def transformed_function(x):
         # Se evalúa la cadena 'derivada_str' reemplazando 'x' por el valor recibido.
         try:
             return eval(derivada_str, {"X": x, "x": x, "np": np})
@@ -59,7 +59,7 @@ def fixedPoint():
     # Se aplica la función transformada hasta que el error relativo sea menor que la tolerancia.
     while True:
         try:
-            xn = transformedFunction(xi)
+            xn = transformed_function(xi)
         except Exception as e:
             return jsonify({"error": "Error al evaluar la función derivada durante la iteración."}), 400
 
