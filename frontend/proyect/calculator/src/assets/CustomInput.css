@@ -1,0 +1,10 @@
+div label{
+    padding: 10px;
+}
+input{
+    border-radius: 4%;
+}
+.label-method{
+    font-weight: bold;
+    font: 40px;
+}
