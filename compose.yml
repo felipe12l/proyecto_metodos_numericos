@@ -1,8 +1,14 @@
-version: '3' #Se esta utilizando la version 3 del formato de archivo Docker Compose
+version: '3.8' #Se esta utilizando la version 3 del formato de archivo Docker Compose
 
 services: # Se definen todos los contenedores a crear y administrar
   microservice-fixed-point:
-    build: ./fixed_point # Indica la construccion de la imagen a partir del Dockerfile de fixed_point
+    build: ./backend/fixed_point # Indica la construccion de la imagen a partir del Dockerfile de fixed_point
     ports:
-      -"5000:5000" # Puerto del host:Puerto del contenedor
+      - "5000:5000" # Puerto del host:Puerto del contenedor
+
+  secante:
+    build: ./backend/secante
+    ports:
+      - "5001:5000"
+
   
