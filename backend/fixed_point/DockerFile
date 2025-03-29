@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY fixed_point.py .
 
-RUN pip install flask
+RUN pip install flask numpy
 
 CMD ["python", "fixed_point.py"]

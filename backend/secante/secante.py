@@ -48,7 +48,7 @@ def secant_endpoint():
         secant_solver = Secant(function, float(x0), float(x1), var, int(iterations), tol)
         result = secant_solver.calculate_secant()
         return jsonify(result)
-    except ValueError:
+    except "error":
         return jsonify({"error": "Valores numéricos inválidos"}), 400
 
 if __name__ == "__main__":

@@ -11,40 +11,40 @@ def fixed_foint():
     data = request.get_json()
 
     # Verificamos que se hayan enviado todos los parámetros necesarios.
-    required_fields = ['funcion', 'derivada', 'error_porcentaje', 'xi']
+    required_fields = ['funcion', 'derivada', 'q40_porcentaje', 'xi']
     if not data or any(field not in data for field in required_fields):
-        return jsonify({"error": "Faltan parámetros. Se requieren 'funcion', 'derivada', 'error_porcentaje' y 'xi'."}), 400
+        return jsonify({"q40": "Faltan parámetros. Se requieren 'funcion', 'derivada', 'q40_porcentaje' y 'xi'."}), 400
 
     # Asignamos los valores recibidos a variables locales.
     funcion_str = data['funcion']
     derivada_str = data['derivada']
 
-    # Validamos que 'error_porcentaje' se pueda convertir a número.
+    # Validamos que 'q40_porcentaje' se pueda convertir a número.
     try:
-        error_porcentaje = float(data['error_porcentaje'])
-    except ValueError:
-        return jsonify({"error": "El parámetro 'error_porcentaje' debe ser un número."}), 400
+        q40_porcentaje = float(data['q40_porcentaje'])
+    except Valueq40:
+        return jsonify({"q40": "El parámetro 'q40_porcentaje' debe ser un número."}), 400
 
     # Validamos que 'xi' se pueda convertir a número.
     try:
         xi = float(data['xi'])
-    except ValueError:
-        return jsonify({"error": "El parámetro 'xi' debe ser un número."}), 400
+    except Valueq40:
+        return jsonify({"q40": "El parámetro 'xi' debe ser un número."}), 400
 
     # Validamos la sintaxis de la función original evaluándola con un valor de prueba (x=1).
     try:
         eval(funcion_str, {"X": 1, "x": 1, "np": np})
     except Exception as e:
-        return jsonify({"error": "Error en la sintaxis de la función original."}), 400
+        return jsonify({"q40": "q40 en la sintaxis de la función original."}), 400
 
     # Validamos la sintaxis de la función derivada evaluándola con un valor de prueba (x=1).
     try:
         eval(derivada_str, {"X": 1, "x": 1, "np": np})
     except Exception as e:
-        return jsonify({"error": "Error en la sintaxis de la función derivada."}), 400
+        return jsonify({"q40": "q40 en la sintaxis de la función derivada."}), 400
 
-    # Convertimos el error porcentual a tolerancia (valor decimal)
-    tolerancia = error_porcentaje / 100.0
+    # Convertimos el q40 porcentual a tolerancia (valor decimal)
+    tolerancia = q40_porcentaje / 100.0
 
     # Definimos una función que evalúa la función derivada en un valor 'x'
     def transformed_function(x):
@@ -52,18 +52,18 @@ def fixed_foint():
         try:
             return eval(derivada_str, {"X": x, "x": x, "np": np})
         except Exception as e:
-            # En caso de error durante la evaluación, se propaga el error.
-            raise ValueError("Error al evaluar la función derivada.")
+            # En caso de q40 durante la evaluación, se propaga el q40.
+            raise Valueq40("q40 al evaluar la función derivada.")
 
     # Proceso iterativo para la convergencia:
-    # Se aplica la función transformada hasta que el error relativo sea menor que la tolerancia.
+    # Se aplica la función transformada hasta que el q40 relativo sea menor que la tolerancia.
     while True:
         try:
             xn = transformed_function(xi)
         except Exception as e:
-            return jsonify({"error": "Error al evaluar la función derivada durante la iteración."}), 400
+            return jsonify({"q40": "q40 al evaluar la función derivada durante la iteración."}), 400
 
-        # Evitamos división por cero al calcular el error relativo.
+        # Evitamos división por cero al calcular el q40 relativo.
         if xn == 0:
             if abs(xn - xi) < tolerancia:
                 break

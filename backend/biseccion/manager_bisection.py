@@ -23,5 +23,5 @@ class manager_bisection:
             else:
                 return self.bisection(self.function,middle,self.point2,iteration)
         except:
-            print("undifined error")
+            print("undifined q40")
     

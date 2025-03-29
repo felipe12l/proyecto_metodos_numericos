@@ -10,5 +10,10 @@ services: # Se definen todos los contenedores a crear y administrar
     build: ./backend/secante
     ports:
       - "5001:5000"
+  
+  jacobi:
+    build: ./backend/jacobi
+    ports:
+      - "5002:5000"
 
   
