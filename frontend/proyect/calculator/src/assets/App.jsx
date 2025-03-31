@@ -1,17 +1,15 @@
 import './App.css'
-import { MethodContainer } from './Methodcointainer'
-import { CustomInput } from './CustomInput'
+import { MethodContainer } from './MethodContainer'
+import { ChangeMethodContainer } from './ChangeMethodContainer'
 export function App() {
    return (
 
-      <div>
-         <div>
-            <button>puntofijo</button>
-            <button>biseccion</button>
-            <button>newton-raphson</button>
-            <button>secante</button>
-         </div>
-         <MethodContainer />
+      <div className="app-div">
+         <ChangeMethodContainer>
+         </ChangeMethodContainer>
+         <MethodContainer >
+            
+         </MethodContainer>
       </div>)
 
 }
