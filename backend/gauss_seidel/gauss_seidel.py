@@ -6,12 +6,9 @@ app = Flask(__name__)
 
 def gauss_seidel(A, b, tolerance=1e-10, max_iter=1000):
     # Convertir a arrays numéricos (tipo float)
-    try:
-        # error_porcentaje = float(data['error_porcentaje'])
-        A = np.array(A, dtype=float)
-        b = np.array(b, dtype=float)
-    except ValueError:
-        return jsonify({"error": "A y b deben ser matrices con elemntos de tipo float"}), 400
+    A = np.array(A, dtype=float)
+    b = np.array(b, dtype=float)
+    
     
 
     # Validar dimensiones
