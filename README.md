@@ -20,7 +20,7 @@ Calculadora de métodos numericos con microservicios
 
 ## gauss_seidel
 
-1. Petición POST con la URL `http://localhost:5000/gauss_seidel`
+1. Petición POST con la URL `http://localhost:5003/gauss_seidel`
 2. EEjemplo de petición:
 
 ```json
