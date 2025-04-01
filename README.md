@@ -13,7 +13,7 @@ Calculadora de métodos numericos con microservicios
 {
   "funcion": "np.sin(x) - x/2",
   "derivada": "np.cos(x) - 0.5",
-  "q40_porcentaje": 5,
+  "error_porcentaje": 5,
   "xi": 1.0
 }
 ```
@@ -21,7 +21,7 @@ Calculadora de métodos numericos con microservicios
 ## gauss_seidel
 
 1. Petición POST con la URL `http://localhost:5003/gauss_seidel`
-2. EEjemplo de petición:
+2. Ejemplo de petición:
 
 ```json
 {
