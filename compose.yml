@@ -20,5 +20,13 @@ services: # Se definen todos los contenedores a crear y administrar
     build: ./backend/gauss_seidel
     ports:
       - "5003:5000"
-
+  newton:
+    build: ./backend/newton
+    ports:
+      - "5004:5000"
+  bisection:
+    build: ./backend/bisection
+    ports:
+      - "5005:5000"
+      
   

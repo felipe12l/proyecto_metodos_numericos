@@ -5,6 +5,10 @@ app = Flask(__name__)
 def bisection():
     try:
         data = request.get_json()
+        if not data:
+            return jsonify({'error': 'No data provided'}), 400
+        if 'function' not in data or 'point1' not in data or 'point2' not in data or 'iteration' not in data:
+            return jsonify({'error': 'Missing parameters'}), 400
         function = data['function']
         point1 = data['point1']
         point2 = data['point2']

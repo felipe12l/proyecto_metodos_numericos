@@ -1,5 +1,5 @@
 from sympy import symbols, diff, lambdify,sympify
-from flask import Flask
+from flask import Flask, request, jsonify
 
 class newton:
     def __init__(self,function:str,point,iterations,var):
@@ -26,3 +26,19 @@ class newton:
         return self.point
     
 
+app = Flask(__name__)
+@app.route('/newton', methods=['POST'])
+def newton_method():
+    data = request.get_json()
+    if not data or 'function' not in data or 'point' not in data or 'iterations' not in data or 'var' not in data:
+        return {"error": "Invalid input. Required: 'function', 'point', 'iterations', and 'var'."}, 400
+
+    function = data['function']
+    point = data['point']
+    iterations = data['iterations']
+    var = data['var']
+
+    newton_instance = newton(function, point, iterations, var)
+    result = newton_instance.calculate_newton()
+
+    return {"result": result}
