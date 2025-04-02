@@ -1,14 +1,14 @@
 # Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM python:3.8
 
 # Set the working directory in the container
 WORKDIR /app
 
 # Copy the current directory contents into the container at /app
-COPY . /app
+COPY bisection.py .
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install flask numpy
 
 # Run the application
-CMD ["python", "-m", "microservice_bisection"]
+CMD ["python", "bisection.py"]

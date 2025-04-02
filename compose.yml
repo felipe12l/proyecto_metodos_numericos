@@ -21,7 +21,7 @@ services: # Se definen todos los contenedores a crear y administrar
     ports:
       - "5003:5000"
   newton:
-    build: ./backend/newton
+    build: ./backend/newton_raphson
     ports:
       - "5004:5000"
   bisection:

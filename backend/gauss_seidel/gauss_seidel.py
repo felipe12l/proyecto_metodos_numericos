@@ -8,8 +8,6 @@ def gauss_seidel(A, b, tolerance=1e-10, max_iter=1000):
     # Convertir a arrays numéricos (tipo float)
     A = np.array(A, dtype=float)
     b = np.array(b, dtype=float)
-    
-    
 
     # Validar dimensiones
     if A.ndim != 2 or A.shape[0] != A.shape[1]:

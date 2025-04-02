@@ -1,6 +1,9 @@
-FROM python:3.11
+FROM python:3.8
+
 WORKDIR /app
-COPY . /app
+
+COPY jacobi.py .
+
 RUN pip install flask numpy
-EXPOSE 5000
+
 CMD [ "python", "jacobi.py", "--reload" ]
