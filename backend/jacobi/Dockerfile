@@ -6,4 +6,4 @@ COPY jacobi.py .
 
 RUN pip install flask numpy
 
-CMD [ "python", "jacobi.py", "--reload" ]
+CMD [ "python", "jacobi.py" ]

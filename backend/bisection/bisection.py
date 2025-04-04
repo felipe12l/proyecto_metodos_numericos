@@ -56,8 +56,11 @@ def bisection():
         # Evaluar la función en el punto medio.
         try:
             f_c = eval(funcion_str, {"x": c, "np": np})
+           
         except Exception as e:
             return jsonify({"error": "Error al evaluar la función en el punto medio."}), 400
+        except ZeroDivisionError:
+            return jsonify({"error": "Error de división por cero en la evaluación de la función."}), 4009
 
         # Si la función en c es casi cero o el intervalo es suficientemente pequeño, consideramos que hemos convergido.
         if abs(f_c) < tolerance or (b - a) / 2.0 < tolerance:

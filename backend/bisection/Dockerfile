@@ -10,5 +10,7 @@ COPY bisection.py .
 # Install any needed packages specified in requirements.txt
 RUN pip install flask numpy
 
-# Run the application
+EXPOSE 5000
+
 CMD ["python", "bisection.py"]
+

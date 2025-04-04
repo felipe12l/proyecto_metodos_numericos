@@ -1,32 +1,34 @@
-version: '3.8' #Se esta utilizando la version 3 del formato de archivo Docker Compose
+ #Se esta utilizando la version 3 del formato de archivo Docker Compose
 
 services: # Se definen todos los contenedores a crear y administrar
-  microservice-fixed-point:
-    build: ./backend/fixed_point # Indica la construccion de la imagen a partir del Dockerfile de fixed_point
-    ports:
-      - "5000:5000" # Puerto del host:Puerto del contenedor
-
-  secante:
-    build: ./backend/secante
+  #servicios organizados por tipo de metodo
+  #-------puntos de corte para ejes-------
+  fixed_point:
+    build: ./backend/fixed_point 
     ports:
       - "5001:5000"
-  
-  jacobi:
-    build: ./backend/jacobi
+
+  bisection:
+    build: ./backend/bisection 
     ports:
       - "5002:5000"
-  
-  gauss_seidel:
-    build: ./backend/gauss_seidel
+  newton_raphson:
+    build: ./backend/newton_raphson 
     ports:
       - "5003:5000"
-  newton:
-    build: ./backend/newton_raphson
+  secant:
+    build: ./backend/secante 
     ports:
       - "5004:5000"
-  bisection:
-    build: ./backend/bisection
+  #-------Resolucion de sistemas de ecuaciones--------
+  jacobi:
+    build: ./backend/jacobi 
     ports:
       - "5005:5000"
-      
-  
+  gauss_seidel:
+    build: ./backend/gauss_seidel 
+    ports:
+      - "5006:5000"
+networks:
+  red1:
+    driver: bridge
