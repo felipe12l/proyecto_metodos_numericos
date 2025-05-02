@@ -3,10 +3,11 @@ import numpy as np
 
 app = Flask(__name__)
 
+
 @app.route('/newton_raphson', methods=['POST'])
 def newton_raphson():
     data = request.get_json()
-    
+
     # Verificar que se hayan enviado todos los parámetros necesarios.
     required_fields = ['funcion', 'derivada', 'error_porcentaje', 'xi']
     if not data or any(field not in data for field in required_fields):
@@ -15,7 +16,7 @@ def newton_raphson():
     # Asignar la función y su derivada (en formato de cadena).
     funcion_str = data['funcion']
     derivada_str = data['derivada']
-    
+
     # Validar y convertir 'error_porcentaje' a número.
     try:
         error_porcentaje = float(data['error_porcentaje'])
@@ -92,5 +93,6 @@ def newton_raphson():
     # Si se alcanza el máximo de iteraciones, se retorna el último valor calculado.
     return jsonify({"resultado": xn, "iteraciones": max_iter}), 200
 
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=3000)

@@ -4,29 +4,29 @@ services: # Se definen todos los contenedores a crear y administrar
   microservice-fixed-point:
     build: ./backend/fixed_point # Indica la construccion de la imagen a partir del Dockerfile de fixed_point
     ports:
-      - "5000:5000" # Puerto del host:Puerto del contenedor
+      - "3000:3000" # Puerto del host:Puerto del contenedor
 
   secante:
     build: ./backend/secante
     ports:
-      - "5001:5000"
+      - "3001:3000"
   
   jacobi:
     build: ./backend/jacobi
     ports:
-      - "5002:5000"
+      - "3002:3000"
   
   gauss_seidel:
     build: ./backend/gauss_seidel
     ports:
-      - "5003:5000"
+      - "3003:3000"
   newton:
     build: ./backend/newton_raphson
     ports:
-      - "5004:5000"
+      - "3004:3000"
   bisection:
     build: ./backend/bisection
     ports:
-      - "5005:5000"
+      - "3005:3000"
       
   

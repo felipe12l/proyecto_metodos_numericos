@@ -3,10 +3,11 @@ import numpy as np
 
 app = Flask(__name__)
 
-@app.route('/bisection', methods=['POST'])
+
+@app.route('/biseccion', methods=['POST'])
 def bisection():
     data = request.get_json()
-    
+
     # Verificar que se hayan enviado los parámetros necesarios.
     required_fields = ['funcion', 'a', 'b', 'error_porcentaje']
     if not data or any(field not in data for field in required_fields):
@@ -52,7 +53,7 @@ def bisection():
     while iter_num < max_iter:
         # Calcular el punto medio del intervalo.
         c = (a + b) / 2.0
-        
+
         # Evaluar la función en el punto medio.
         try:
             f_c = eval(funcion_str, {"x": c, "np": np})
@@ -76,5 +77,6 @@ def bisection():
     # Si se alcanza el máximo de iteraciones, se retorna el último valor calculado.
     return jsonify({"resultado": c, "iteraciones": max_iter}), 200
 
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=3000)
