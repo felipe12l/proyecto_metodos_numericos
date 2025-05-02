@@ -80,4 +80,4 @@ def fixed_foint():
 # Inicia la aplicación si se ejecuta el script directamente.
 if __name__ == '__main__':
     # Se configura el servidor para escuchar en todas las interfaces de red en el puerto 5000.
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=3000)

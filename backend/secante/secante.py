@@ -3,8 +3,9 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+
 class Secant:
-    def __init__(self, function: str, x0, x1, var = "x", iterations=100, tol =1e-5):
+    def __init__(self, function: str, x0, x1, var="x", iterations=100, tol=1e-5):
         self.var = symbols(var)
         self.expr = sympify(function)
         self.function = lambdify(self.var, self.expr)
@@ -25,19 +26,20 @@ class Secant:
 
             if abs(x_new - self.x1) < self.tol:
                 return {"root": x_new, "iteracion": _}
-            
+
             self.x0, self.x1 = self.x1, x_new
 
         return {"error": "No se encontro la raiz"}
 
-@app.route("/secant", methods=["POST"])
+
+@app.route("/secante", methods=["POST"])
 def secant_endpoint():
     data = request.get_json()
 
     function = data.get("function")
     x0 = data.get("x0")
     x1 = data.get("x1")
-    iterations = data.get("iterations", 100)  
+    iterations = data.get("iterations", 100)
     var = data.get("var", "x")
     tol = data.get("tol", 1e-5)
 
@@ -45,11 +47,13 @@ def secant_endpoint():
         return jsonify({"error": "Parámetros incompletos"}), 400
 
     try:
-        secant_solver = Secant(function, float(x0), float(x1), var, int(iterations), tol)
+        secant_solver = Secant(function, float(
+            x0), float(x1), var, int(iterations), tol)
         result = secant_solver.calculate_secant()
         return jsonify(result)
     except "error":
         return jsonify({"error": "Valores numéricos inválidos"}), 400
 
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=3000, debug=True)
