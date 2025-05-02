@@ -1,4 +1,4 @@
-version: '3.8' #Se esta utilizando la version 3 del formato de archivo Docker Compose
+ #Se esta utilizando la version 3 del formato de archivo Docker Compose
 
 services: # Se definen todos los contenedores a crear y administrar
   microservice-fixed-point:
