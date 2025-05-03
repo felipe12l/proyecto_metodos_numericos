@@ -1,0 +1,7 @@
+{
+    "equation": "x*sqrt(y)", 
+    "initial_x": 1,
+    "initial_y": 4,
+    "step": 0.2,
+    "final_value": 1.6
+  }
