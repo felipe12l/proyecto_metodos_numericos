@@ -28,5 +28,7 @@ services: # Se definen todos los contenedores a crear y administrar
     build: ./backend/bisection
     ports:
       - "3005:3000"
-      
-  
+  runge_kutta:
+    build: ./backend/runge_kutta
+    ports:
+      - "3007:3000"
