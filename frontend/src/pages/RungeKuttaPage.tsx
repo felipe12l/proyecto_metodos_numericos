@@ -1,69 +1,36 @@
-// src/pages/RungeKuttaPage.tsx
-
 import { useState, FormEvent } from 'react';
-import axios from 'axios';
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer
-} from 'recharts';
-
-interface RKParams {
-  equation: string;
-  initial_x: number;
-  initial_y: number;
-  step: number;
-  final_value: number;
-}
-
-interface Point {
-  x: number;
-  y: number;
-}
+import MathKeyboard from '../components/EquationKeyboard';
+import ChartWithZoom from '../components/ChartWithZoom';
+import { rungeKutta } from '../services/api';
+import { parseLatex } from '../utils/parseLatex';
 
 export default function RungeKuttaPage() {
-  // Estado del formulario
-  const [equation, setEquation] = useState<string>('');
+  const [latex, setLatex] = useState<string>('');
   const [initialX, setInitialX] = useState<string>('');
   const [initialY, setInitialY] = useState<string>('');
   const [step, setStep] = useState<string>('');
   const [finalValue, setFinalValue] = useState<string>('');
-  
-  // Resultado de la API
-  const [data, setData] = useState<Point[]>([]);
+  const [data, setData] = useState<{ x: number; y: number }[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // Manejador del submit
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    // Validar que todos los campos estén completos
-    if (!equation || !initialX || !initialY || !step || !finalValue) {
-      setError('Por favor completa todos los campos.');
-      return;
-    }
+    //Convierte latex a formato SymPy
+    const equation = parseLatex(latex);
 
-    const payload: RKParams = {
-      equation,
+    const payload = {
+      equation, 
       initial_x: parseFloat(initialX),
       initial_y: parseFloat(initialY),
       step: parseFloat(step),
-      final_value: parseFloat(finalValue)
+      final_value: parseFloat(finalValue),
     };
 
     try {
-      const resp = await axios.post<{ result: [number, number][] }>(
-        '/runge_kutta',
-        payload
-      );
-
-      // Transformar a objetos { x, y }
-      const points = resp.data.result.map(([x, y]) => ({ x, y }));
+      const resp = await rungeKutta(payload);
+      const points = resp.data.result.map(([x, y]: [number, number]) => ({ x, y }));
       setData(points);
     } catch (err: any) {
       setError(err.response?.data?.error || err.message);
@@ -72,73 +39,37 @@ export default function RungeKuttaPage() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Runge–Kutta 4° Orden</h1>
-      <form onSubmit={handleSubmit} style={{ marginBottom: 30 }}>
-        <div>
-          <label>Ecuación f(x,y): </label>
+      <h2>Calculadora Runge–Kutta</h2>
+      <form onSubmit={handleSubmit}>
+        <MathKeyboard latex={latex} onChange={setLatex} />
+
+        {/* Parámetros numéricos */}
+        <div style={{ display: 'flex', gap: 10, marginTop: 10 }}>
           <input
-            type="text"
-            value={equation}
-            onChange={e => setEquation(e.target.value)}
-            placeholder="e.g. x*sqrt(y)"
-            style={{ width: '100%' }}
+            type="number" placeholder="initial_x"
+            value={initialX} onChange={e => setInitialX(e.target.value)}
+          />
+          <input
+            type="number" placeholder="initial_y"
+            value={initialY} onChange={e => setInitialY(e.target.value)}
+          />
+          <input
+            type="number" placeholder="step"
+            value={step} onChange={e => setStep(e.target.value)}
+          />
+          <input
+            type="number" placeholder="final_value"
+            value={finalValue} onChange={e => setFinalValue(e.target.value)}
           />
         </div>
-        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-          <div>
-            <label>initial_x:</label>
-            <input
-              type="number"
-              step="any"
-              value={initialX}
-              onChange={e => setInitialX(e.target.value)}
-            />
-          </div>
-          <div>
-            <label>initial_y:</label>
-            <input
-              type="number"
-              step="any"
-              value={initialY}
-              onChange={e => setInitialY(e.target.value)}
-            />
-          </div>
-          <div>
-            <label>step (h):</label>
-            <input
-              type="number"
-              step="any"
-              value={step}
-              onChange={e => setStep(e.target.value)}
-            />
-          </div>
-          <div>
-            <label>final_value:</label>
-            <input
-              type="number"
-              step="any"
-              value={finalValue}
-              onChange={e => setFinalValue(e.target.value)}
-            />
-          </div>
-        </div>
+
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit" style={{ marginTop: '1rem' }}>
-          Calcular
-        </button>
+
+        <button type="submit" style={{ marginTop: 10 }}>Calcular</button>
       </form>
 
-      {data.length > 0 && (
-        <ResponsiveContainer width="100%" height={400}>
-          <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="x" />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="y" dot={false} />
-          </LineChart>
-        </ResponsiveContainer>
-      )}
+      {/* Gráfica con zoom */}
+      {data.length > 0 && <ChartWithZoom data={data} />}
     </div>
   );
 }
