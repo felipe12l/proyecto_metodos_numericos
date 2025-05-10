@@ -1,0 +1,29 @@
+.rk-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.rk-numbers {
+  display: flex;
+  gap: 1rem;
+  align-self: center;
+}
+.rk-error {
+  color: #c53030;
+  font-size: 0.875rem;
+}
+.rk-submit {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  background: #3182ce;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  align-self: center;
+  margin-bottom: 10px;
+
+}
+.rk-submit:hover {
+  background: #2b6cb0;
+}

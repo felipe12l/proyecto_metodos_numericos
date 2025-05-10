@@ -1,0 +1,18 @@
+/* src/components/ChartWithZoom/ChartWithZoom.css */
+
+/* Contenedor con sombra y padding */
+.chart-container {
+  width: 100%;
+  height: 400px;
+  padding: 1rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Variables para tema de la línea */
+:root {
+  --chart-line-color: #8884d8;
+  --chart-fill-color: rgba(136, 132, 216, 0.2);
+  --chart-point-color: #ff0000;
+}

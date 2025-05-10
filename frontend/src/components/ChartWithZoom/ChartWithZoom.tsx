@@ -10,6 +10,8 @@ import {
   import zoomPlugin from 'chartjs-plugin-zoom';
   import { Line } from 'react-chartjs-2';
   import { useEffect } from 'react';
+  import './ChartWithZoom.css';
+
   
   // Registrar componentes y plugin
   ChartJS.register(
@@ -33,8 +35,10 @@ import {
       labels,
       datasets: [
         {
-          label: 'y(x)',
-          data: data.map((p) => p.y),
+          data: data.map(p => p.y),
+          borderColor: 'var(--chart-line-color)',
+          backgroundColor: 'var(--chart-fill-color)',
+          pointBackgroundColor: 'var(--chart-point-color)',
           fill: false,
           borderWidth: 2,
         },
@@ -56,7 +60,7 @@ import {
     };
   
     return (
-      <div style={{ height: 400, width: '100%' }}>
+      <div className="chart-container">
         <Line data={dataset} options={options} />
       </div>
     );
