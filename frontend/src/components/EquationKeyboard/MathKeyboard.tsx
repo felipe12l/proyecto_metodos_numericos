@@ -24,7 +24,7 @@ export default function MathKeyboard({ latex, onChange }: KeyboardProps) {
         ref={ref}
         virtual-keyboard-mode="onfocus"
         value={latex}
-        style={{ '--mathlive-theme': 'dark' }}
+        style={{ '--mathlive-theme': 'light' }}
       />
     </div>
   );
