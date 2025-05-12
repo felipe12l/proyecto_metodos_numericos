@@ -32,3 +32,7 @@ services: # Se definen todos los contenedores a crear y administrar
     build: ./backend/runge_kutta
     ports:
       - "3006:3000"
+  trapecio:
+    build: ./backend/trapecio
+    ports:
+      - "3007:3000"
