@@ -1,7 +1,8 @@
 import React from 'react';
-import RungeKuttaForm from '../components/RungeKuttaForm/RungeKuttaForm';
-import ChartWithZoom from '../components/ChartWithZoom/ChartWithZoom';
-import { useRungeKutta } from '../hooks/useRungeKutta';
+import RungeKuttaForm from './RungeKuttaForm/RungeKuttaForm';
+import ChartWithZoom from '../../components/ChartWithZoom/ChartWithZoom';
+import { useRungeKutta } from './useRungeKutta';
+import './RungeKuttaPage.css';
 
 export default function RungeKuttaPage() {
   const {
@@ -15,17 +16,17 @@ export default function RungeKuttaPage() {
   } = useRungeKutta();
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Calculadora Runge–Kutta</h2>
+    <div className="rk-page">
+      <h2>Runge–Kutta 4º Orden</h2>
       <RungeKuttaForm
         latex={latex} setLatex={setLatex}
         initialX={initialX} setInitialX={setInitialX}
         initialY={initialY} setInitialY={setInitialY}
         step={step} setStep={setStep}
         finalValue={finalValue} setFinalValue={setFinalValue}
-        error={error} onSubmit={(e) => { e.preventDefault(); calculate(); }}
+        error={error}
+        onSubmit={e => { e.preventDefault(); calculate(); }}
       />
-
       {data.length > 0 && <ChartWithZoom data={data} />}
     </div>
   );
