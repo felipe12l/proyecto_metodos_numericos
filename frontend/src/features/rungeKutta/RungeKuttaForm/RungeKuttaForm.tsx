@@ -35,7 +35,7 @@ export default function RungeKuttaForm({
         <NumberInput label="X inicial" value={initialX} onChange={setInitialX} />
         <NumberInput label="Y inicial" value={initialY} onChange={setInitialY} />
         <NumberInput label="Paso"      value={step}      onChange={setStep}      />
-        <NumberInput label="Valor final" value={finalValue} onChange={setFinalValue} />
+        <NumberInput label="Valor final de X" value={finalValue} onChange={setFinalValue} />
       </div>
       {error && <p className="rk-error">{error}</p>}
       <button className="rk-submit" type="submit">Calcular</button>
