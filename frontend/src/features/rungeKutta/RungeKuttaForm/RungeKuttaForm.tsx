@@ -1,6 +1,6 @@
 import React, { FormEvent } from 'react';
-import MathKeyboard from '../../../components/EquationKeyboard/MathKeyboard';
-import NumberInput from '../../../components/common/NumberInput';
+import MathKeyboard from '../../../components/common/EquationKeyboard/MathKeyboard';
+import NumberInput from '../../../components/common/NumberInput/NumberInput';
 import './RungeKuttaForm.css';
 
 interface Props {

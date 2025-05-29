@@ -1,6 +1,6 @@
 import React from 'react';
 import RungeKuttaForm from './RungeKuttaForm/RungeKuttaForm';
-import ChartWithZoom from '../../components/ChartWithZoom/ChartWithZoom';
+import ChartWithZoom from '../../components/common/ChartWithZoom/ChartWithZoom';
 import { useRungeKutta } from './useRungeKutta';
 import './RungeKuttaPage.css';
 
