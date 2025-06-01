@@ -19,3 +19,9 @@ export const fixedPoint = (payload: {
   error_porcentaje: number;
   xi: number;
 }) => api.post('/fixed_point', payload);
+
+export const gaussSeidel = (payload: {
+  A: number[][];
+  b: number[];
+  error_porcentaje: number;
+}) => api.post('/gauss_seidel', payload);
