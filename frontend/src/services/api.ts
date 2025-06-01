@@ -12,3 +12,13 @@ export const rungeKutta = (payload: {
   step: number;
   final_value: number;
 }) => api.post('/runge_kutta', payload);
+
+export const secante = (payload: {
+  function: string;
+  x0: number;
+  x1: number;
+  iterations: number;
+  tol: number;
+}) => {
+  return api.post('/secante', payload);
+};

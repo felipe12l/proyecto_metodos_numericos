@@ -9,7 +9,12 @@ export default defineConfig({
       '/runge_kutta': {
         target: 'http://localhost:3006',
         changeOrigin: true
+      },
+      '/secante': {
+        target: 'http://localhost:3001',
+        changeOrigin: true
       }
     }
+    
   }
 })

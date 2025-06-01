@@ -10,7 +10,7 @@ import RungeKuttaPage from './features/rungeKutta/RungeKuttaPage'
 //import GaussSeidelPage  from './features/gaussSeidel/GaussSeidelPage'
 //import JacobiPage       from './features/jacobi/JacobiPage'
 //import NewtonRaphsonPage from './features/newtonRaphson/NewtonRaphsonPage'
-//import SecantPage       from './features/secant/SecantPage'
+import SecantePage from './features/secante/SecantePage'
 //import TrapecioPage     from './features/trapecio/TrapecioPage'
 //import SimpsonPage      from './features/simpson/SimpsonPage'
 
@@ -27,7 +27,7 @@ function App() {
           <Route path="/jacobi"          element={<RungeKuttaPage />} />
           <Route path="/newton-raphson"  element={<RungeKuttaPage />} />
           <Route path="/runge-kutta"     element={<RungeKuttaPage />} />
-          <Route path="/secante"         element={<RungeKuttaPage />} />
+          <Route path="/secante"         element={<SecantePage />} />
           <Route path="/trapecio"        element={<RungeKuttaPage />} />
           <Route path="/simpson"         element={<RungeKuttaPage />} />
         </Routes>
