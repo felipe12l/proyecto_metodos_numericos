@@ -14,6 +14,7 @@ const methods = [
   { key: 'secante',         label: 'Secante',         path: '/secante' },
   { key: 'trapecy',         label: 'Trapecio',        path: '/trapecio' },
   { key: 'simpson',         label: 'Simpson',         path: '/simpson' },
+  {key: 'euler',           label: 'Euler',           path: '/euler' }
 ]
 
 export default function Header() {

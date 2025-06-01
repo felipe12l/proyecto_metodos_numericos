@@ -12,3 +12,11 @@ export const rungeKutta = (payload: {
   step: number;
   final_value: number;
 }) => api.post('/runge_kutta', payload);
+
+export const euler=(payload: {
+  ecuation: string;
+  initial_x: number;
+  initial_y: number;
+  step: number;
+  final_value: number;
+})=>api.post('/euler', payload);

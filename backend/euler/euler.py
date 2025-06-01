@@ -31,17 +31,17 @@ def euler(f: str,x0:float,xf:float,y0:float,steps:int)-> list:
 @app.route("/euler", methods=["POST"])
 def euler_endpoint():
     data= request.get_json()
-    equation_str=data.get("equation")
+    equation=data.get("equation")
     initial_x=data.get("initial_x")
     initial_y=data.get("initial_y")
     step=data.get("step")
     final_value=data.get("final_value")
-    if None in (equation_str, initial_x, initial_y, step, final_value):
+    if None in (equation, initial_x, initial_y, step, final_value):
         return jsonify({"error": "Parámetros incompletos"}), 400
     try:
         
         # 3. Ejecutar el método Euler
-        result=euler(equation_str,float(initial_x),float(final_value),float(initial_y),int(step))
+        result=euler(equation,float(initial_x),float(final_value),float(initial_y),int(step))
         return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 400

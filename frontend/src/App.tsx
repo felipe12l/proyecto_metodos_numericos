@@ -4,6 +4,7 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/Header/Header'
 import RungeKuttaPage from './features/rungeKutta/RungeKuttaPage'
+import EulerPage from './features/euler/EulerPage'
 // Placeholder imports for other methods:
 //import BisectionPage    from './features/bisection/BisectionPage'
 //import FixedPointPage   from './features/fixedPoint/FixedPointPage'
@@ -30,6 +31,7 @@ function App() {
           <Route path="/secante"         element={<RungeKuttaPage />} />
           <Route path="/trapecio"        element={<RungeKuttaPage />} />
           <Route path="/simpson"         element={<RungeKuttaPage />} />
+          <Route path="/euler"           element={<EulerPage/>} />
         </Routes>
       </main>
     </BrowserRouter>
