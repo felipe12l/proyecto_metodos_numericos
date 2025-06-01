@@ -18,8 +18,8 @@ export function useFixedPoint() {
     setError(null);
     try {
       const payload = {
-        funcion: parseLatex(funcion),
-        derivada: parseLatex(derivada),
+        funcion: parseLatex(funcion, 'numpy'),
+        derivada: parseLatex(derivada, 'numpy'),
         error_porcentaje: parseFloat(errorPorcentaje),
         xi: parseFloat(xi),
       };

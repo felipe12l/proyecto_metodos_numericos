@@ -10,40 +10,38 @@
  * - 2\cdot x\cdot y           → 2*x*y
  * - Exponenciación ^{n} o ^n  → **n
  */
-export function parseLatex(latex: string): string {
+export function parseLatex(latex: string, mode: 'sympy' | 'numpy' = 'sympy'): string {
   let s = latex;
-
-  // 0) Quitar metacaracteres \left y \right
+  // 0) Quitar \left \right
   s = s.replace(/\\left/g, '').replace(/\\right/g, '');
 
-  // 0.1) Reemplazar funciones trigonométricas básicas
-  s = s.replace(/\\sin/g, 'sin');
-  s = s.replace(/\\cos/g, 'cos');
-
-  // 1) Fracciones: \frac{a}{b} → (a)/(b)
+  // 1) Fracciones y raíces iguales para ambos
   s = s.replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, '($1)/($2)');
-
-  // 2) Raíz cuadrada normal: \sqrt{expr} → sqrt(expr)
   s = s.replace(/\\sqrt\{([^}]*)\}/g, 'sqrt($1)');
 
-  // 3) Notación extendida \cdotsqrt(expr) o \cdotsqrt{expr} → *sqrt(expr)
-  s = s.replace(
-    /([A-Za-z0-9\)\]])\\cdotsqrt(?:\{([^}]*)\}|\(([^)]*)\))/g,
-    (_match, prefix, g1, g2) => {
-      const content = g1 ?? g2;
-      return `${prefix}*sqrt(${content})`;
-    }
-  );
+  // 2) Funciones trigonométricas y log, adaptando a NumPy o a SymPy
+  if (mode === 'numpy') {
+    s = s.replace(/\\sin/g, 'np.sin');
+    s = s.replace(/\\cos/g, 'np.cos');
+    s = s.replace(/\\tan/g, 'np.tan');
+    s = s.replace(/\\exp/g, 'np.exp');
+    s = s.replace(/\\log/g, 'np.log');
+    // …cualquier otra función de NumPy que uses (np.sqrt, np.abs, etc.)…
+  } else {
+    s = s.replace(/\\sin/g, 'sin');
+    s = s.replace(/\\cos/g, 'cos');
+    s = s.replace(/\\tan/g, 'tan');
+    s = s.replace(/\\exp/g, 'exp');
+    s = s.replace(/\\log/g, 'log');
+    // …y así para funciones simbólicas en SymPy…
+  }
 
-  // 4) Productos con \cdot: a\cdot b\cdot c → a*b*c
+  // 3) Multiplicaciones con \cdot y exponenciación (idénticas para ambos):
   s = s.replace(/\\cdot/g, '*');
-
-  // 5) Exponenciación con llaves: x^{n} → x**n
   s = s.replace(/([A-Za-z0-9]+)\^\{([^}]*)\}/g, '$1**$2');
-
-  // 6) Exponenciación sin llaves: x^2 → x**2
   s = s.replace(/([A-Za-z0-9]+)\^([0-9]+)/g, '$1**$2');
 
-  // 7) Limpieza de espacios múltiples
-  return s.replace(/\s+/g, ' ').trim();
+  // 4) Limpieza final
+  return s.trim();
 }
+
