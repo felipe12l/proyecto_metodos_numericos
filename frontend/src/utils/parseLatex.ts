@@ -3,6 +3,7 @@
 /**
  * Convierte expresiones LaTeX sencillas a sintaxis compatible con SymPy:
  * - \left( … \right)          → ( … )
+ * - \sin(x), \cos(x), etc.    → sin(x), cos(x)
  * - \frac{a}{b}               → (a)/(b)
  * - \sqrt{expr}               → sqrt(expr)
  * - \cdotsqrt(expr)           → *sqrt(expr)
@@ -14,6 +15,10 @@ export function parseLatex(latex: string): string {
 
   // 0) Quitar metacaracteres \left y \right
   s = s.replace(/\\left/g, '').replace(/\\right/g, '');
+
+  // 0.1) Reemplazar funciones trigonométricas básicas
+  s = s.replace(/\\sin/g, 'sin');
+  s = s.replace(/\\cos/g, 'cos');
 
   // 1) Fracciones: \frac{a}{b} → (a)/(b)
   s = s.replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, '($1)/($2)');

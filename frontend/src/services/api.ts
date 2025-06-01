@@ -12,3 +12,10 @@ export const rungeKutta = (payload: {
   step: number;
   final_value: number;
 }) => api.post('/runge_kutta', payload);
+
+export const fixedPoint = (payload: {
+  funcion: string;
+  derivada: string;
+  error_porcentaje: number;
+  xi: number;
+}) => api.post('/fixed_point', payload);

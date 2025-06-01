@@ -1,0 +1,31 @@
+/* frontend/src/features/fixedPoint/FixedPointForm/FixedPointForm.css */
+
+.fp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fp-numbers {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.fp-error {
+  color: #dc2626;
+  font-size: 0.9rem;
+}
+
+.fp-submit {
+  width: fit-content;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+.fp-submit:hover {
+  background-color: #059669;
+}

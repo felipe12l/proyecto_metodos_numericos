@@ -9,6 +9,10 @@ export default defineConfig({
       '/runge_kutta': {
         target: 'http://localhost:3006',
         changeOrigin: true
+      },
+      '/fixed_point': {
+        target: 'http://localhost:3000',
+        changeOrigin: true
       }
     }
   }
