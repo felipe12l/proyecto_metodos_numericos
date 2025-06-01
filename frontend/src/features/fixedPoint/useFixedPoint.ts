@@ -1,4 +1,4 @@
-// src/features/fixedPoint/useFixedPoint.ts
+// frontend/src/features/fixedPoint/useFixedPoint.ts
 
 import { useState } from 'react';
 import axios from 'axios';
@@ -7,6 +7,8 @@ import { parseLatex } from '../../utils/parseLatex';
 interface FixedPointResult {
   resultado: number;
   iteraciones: number[];
+  func_plot: Array<[number, number]>;
+  deriv_plot: Array<[number, number]>;
 }
 
 export function useFixedPoint() {
@@ -16,8 +18,11 @@ export function useFixedPoint() {
   const [xi, setXi]                         = useState('');
   const [resultado, setResultado]           = useState<number | null>(null);
 
-  // **Este es el estado que guardará el array de iteraciones**
   const [iteraciones, setIteraciones]       = useState<number[]>([]);
+  // Ahora también guardamos func_plot y deriv_plot:
+  const [funcPlot, setFuncPlot]             = useState<Array<{ x: number; y: number }>>([]);
+  const [derivPlot, setDerivPlot]           = useState<Array<{ x: number; y: number }>>([]);
+
   const [error, setError]                   = useState<string | null>(null);
 
   const calculate = async () => {
@@ -33,7 +38,15 @@ export function useFixedPoint() {
       const resp = await axios.post<FixedPointResult>('/fixed_point', payload);
 
       setResultado(resp.data.resultado);
-      setIteraciones(resp.data.iteraciones);  // ← Aquí populamos el array
+      setIteraciones(resp.data.iteraciones);
+
+      // Transformar func_plot y deriv_plot a objeto {x, y}
+      setFuncPlot(
+        resp.data.func_plot.map(([x, y]) => ({ x, y }))
+      );
+      setDerivPlot(
+        resp.data.deriv_plot.map(([x, y]) => ({ x, y }))
+      );
     } catch (err: any) {
       setError(err.response?.data?.error || err.message);
     }
@@ -45,7 +58,9 @@ export function useFixedPoint() {
     errorPorcentaje, setErrorPorcentaje,
     xi, setXi,
     resultado,
-    iteraciones,     // ← No olvides exportar el array aquí
+    iteraciones,
+    funcPlot,
+    derivPlot,
     error,
     calculate
   };
