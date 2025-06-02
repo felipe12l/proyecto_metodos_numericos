@@ -6,7 +6,7 @@ import RungeKuttaPage from './features/rungeKutta/RungeKuttaPage'
 //import BisectionPage    from './features/bisection/BisectionPage'
 import FixedPointPage   from './features/fixedPoint/FixedPointPage'
 import GaussSeidelPage  from './features/gaussSeidel/GaussSeidelPage'
-//import JacobiPage       from './features/jacobi/JacobiPage'
+import JacobiPage       from './features/jacobi/JacobiPage'
 //import NewtonRaphsonPage from './features/newtonRaphson/NewtonRaphsonPage'
 import SecantePage from './features/secante/SecantePage'
 //import TrapecioPage     from './features/trapecio/TrapecioPage'
@@ -22,7 +22,7 @@ function App() {
           <Route path="/bisection"       element={<RungeKuttaPage />} />
           <Route path="/fixed-point"     element={<FixedPointPage />} />
           <Route path="/gauss-seidel"    element={<GaussSeidelPage />} />
-          <Route path="/jacobi"          element={<RungeKuttaPage />} />
+          <Route path="/jacobi"          element={<JacobiPage />} />
           <Route path="/newton-raphson"  element={<RungeKuttaPage />} />
           <Route path="/runge-kutta"     element={<RungeKuttaPage />} />
           <Route path="/secante"         element={<SecantePage />} />

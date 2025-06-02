@@ -21,6 +21,10 @@ export default defineConfig({
       '/gauss_seidel': {
         target: 'http://localhost:3003',
         changeOrigin: true
+      },
+      '/jacobi': {
+        target: 'http://localhost:3002',
+        changeOrigin: true
       }
     }
     
