@@ -50,7 +50,7 @@ export default function GaussSeidelPage() {
           <ul>
             {resultado.map((xi, idx) => (
               <li key={idx}>
-                x<sub>{idx + 1}</sub> = {xi.toFixed(6)}
+                <strong>x<sub>{idx + 1}</sub></strong> = {xi.toFixed(6)}
               </li>
             ))}
           </ul>
