@@ -4,25 +4,24 @@ import { useState } from 'react';
 import axios from 'axios';
 
 interface GaussSeidelResult {
-  resultado: number[];    // Vector solución final
-  iteraciones: number;    // Cantidad de iteraciones realizadas
+  resultado: number[];     // Vector solución final
+  iteraciones: number;     // Cantidad de iteraciones
+  historial: number[][];   // Lista de vectores [x^(0), x^(1), …, x^(N)]
 }
 
 export function useGaussSeidel() {
   const [n, setN] = useState<number>(2);
-
-  // Matriz A como strings (p. ej. "1/2", "3")
   const [A, setA] = useState<string[][]>(
     Array.from({ length: n }, () => Array.from({ length: n }, () => '0'))
   );
   const [b, setB] = useState<string[]>(Array.from({ length: n }, () => '0'));
   const [errorPorcentaje, setErrorPorcentaje] = useState<string>('0.01');
 
-  const [resultado, setResultado]       = useState<number[] | null>(null);
-  const [iteraciones, setIteraciones]   = useState<number | null>(null);
-  const [error, setError]               = useState<string | null>(null);
+  const [resultado, setResultado]         = useState<number[] | null>(null);
+  const [iteraciones, setIteraciones]     = useState<number | null>(null);
+  const [historial, setHistorial]         = useState<number[][]>([]);   // <-- nuevo
+  const [error, setError]                 = useState<string | null>(null);
 
-  // Función auxiliar para parsear "a/b" o "(a/b)" o números simples
   const parseValue = (value: string): number => {
     let s = value.trim();
     if (s.startsWith('(') && s.endsWith(')')) {
@@ -73,9 +72,10 @@ export function useGaussSeidel() {
     setError(null);
     setResultado(null);
     setIteraciones(null);
+    setHistorial([]);   // Reiniciamos el historial
 
     try {
-      // Convertir A y b usando parseValue para admitir fracciones
+      // Convertir A y b usando parseValue
       const A_num: number[][] = A.map((fila) =>
         fila.map((celda) => parseValue(celda))
       );
@@ -97,17 +97,19 @@ export function useGaussSeidel() {
         throw new Error(`El error porcentual no es válido: "${errorPorcentaje}"`);
       }
 
+      // Payload para el backend
       const payload = {
         A: A_num,
         b: b_num,
         error_porcentaje: error_num,
       };
 
-      // Aquí se usa GaussSeidelResult en lugar de inline type
+      // Llamada al endpoint (ahora devuelve historial)
       const resp = await axios.post<GaussSeidelResult>('/gauss_seidel', payload);
 
       setResultado(resp.data.resultado);
       setIteraciones(resp.data.iteraciones);
+      setHistorial(resp.data.historial);   // <-- guardamos todo el historial de vectores
     } catch (err: any) {
       if (err instanceof Error && err.message) {
         setError(err.message);
@@ -124,6 +126,7 @@ export function useGaussSeidel() {
     errorPorcentaje,
     resultado,
     iteraciones,
+    historial,           // <-- exponemos historial al componente
     error,
     updateA,
     updateB,

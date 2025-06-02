@@ -1,5 +1,3 @@
-# frontend/src/features/fixedPoint/fixed_point.py
-
 from flask import Flask, request, jsonify
 import numpy as np
 
