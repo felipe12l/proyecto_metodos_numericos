@@ -65,7 +65,7 @@ export default function FixedPointPage() {
 
       {resultado !== null && (
         <div className="fp-result">
-          <p>Resultado convergente:</p>
+          <p>Despues de <span className='fp-num-iterations'>{iteraciones.length}</span> iteraciones la x más aproximada a la raiz es:</p> 
           <span className="fp-value">{resultado.toFixed(6)}</span>
         </div>
       )}
