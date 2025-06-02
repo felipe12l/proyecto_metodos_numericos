@@ -29,8 +29,10 @@ export default function SimpsonForm({
   return (
     <form className="simpson-form" onSubmit={onSubmit}>
       {/* Función f(x) */}
-      <label htmlFor="funcion">Función f(x):</label>
-      <MathKeyboard latex={funcion} onChange={setFuncion} />
+      <div className='simpson-funcion-keyboard-wrapper'>
+        <label htmlFor="funcion">Función f(x):</label>
+        <MathKeyboard latex={funcion} onChange={setFuncion} />
+      </div>
 
       {/* Límites y número de intervalos */}
       <div className="simpson-row">

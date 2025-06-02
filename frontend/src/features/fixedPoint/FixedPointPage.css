@@ -19,9 +19,9 @@
   flex-direction: column; /* Para que el label esté arriba del teclado */
   align-items: center; 
 
-  width: fit-content;      /* 🔹 Ajusta el ancho al contenido */
-  margin-left: auto;       /* 🔹 Centra horizontalmente */
-  margin-right: auto;      /* 🔹 Centra horizontalmente */
+  width: fit-content;/* Ajusta el ancho al contenido */
+  margin-left: auto;/* Centra horizontalmente */
+  margin-right: auto;/* Centra horizontalmente */
 }
 
 .fp-result p {
