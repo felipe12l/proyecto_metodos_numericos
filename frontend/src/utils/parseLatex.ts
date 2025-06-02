@@ -1,24 +1,38 @@
 // src/utils/parseLatex.ts
 
 /**
- * Convierte expresiones LaTeX sencillas a sintaxis compatible con SymPy:
- * - \left( … \right)          → ( … )
- * - \frac{a}{b}               → (a)/(b)
- * - \sqrt{expr}               → sqrt(expr)
- * - \cdotsqrt(expr)           → *sqrt(expr)
- * - 2\cdot x\cdot y           → 2*x*y
- * - Exponenciación ^{n} o ^n  → **n
+ * Convierte expresiones LaTeX sencillas a sintaxis compatible con NumPy:
+ * - \left( … \right)                    → ( … )
+ * - \sin(x), \cos(x), etc.              → np.sin(x), np.cos(x), etc.   (cuando mode='numpy')
+ * - \frac{a}{b}                         → (a)/(b)
+ * - \frac a b (sin llaves, ej. \frac92) → (a)/(b)
+ * - \sqrt{expr}                         → sqrt(expr)
+ * - \cdotsqrt(expr)                     → *sqrt(expr)
+ * - a\cdot b\cdot c                     → a*b*c
+ * - Exponenciación x^{n} o x^n          → x**n
  */
-export function parseLatex(latex: string): string {
+export function parseLatex(
+  latex: string,
+  mode: 'sympy' | 'numpy' = 'sympy'
+): string {
   let s = latex;
 
   // 0) Quitar metacaracteres \left y \right
   s = s.replace(/\\left/g, '').replace(/\\right/g, '');
 
-  // 1) Fracciones: \frac{a}{b} → (a)/(b)
+  // 0.1) Manejar fracciones “sin llaves” del tipo \frac a b o \frac92
+  // Patrón: \frac<token1><token2>, donde token puede ser dígito, letra o expresión parentetizada
+  // Ejemplos: \frac92   →  (9)/(2)
+  //           \frac x y  →  (x)/(y)
+  s = s.replace(
+    /\\frac\s*([A-Za-z0-9]+)\s*([A-Za-z0-9]+)/g,
+    '($1)/($2)'
+  );
+
+  // 1) Fracciones “con llaves”: \frac{a}{b} → (a)/(b)
   s = s.replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g, '($1)/($2)');
 
-  // 2) Raíz cuadrada normal: \sqrt{expr} → sqrt(expr)
+  // 2) Raíz cuadrada “básica”: \sqrt{expr} → sqrt(expr)
   s = s.replace(/\\sqrt\{([^}]*)\}/g, 'sqrt($1)');
 
   // 3) Notación extendida \cdotsqrt(expr) o \cdotsqrt{expr} → *sqrt(expr)
@@ -30,7 +44,7 @@ export function parseLatex(latex: string): string {
     }
   );
 
-  // 4) Productos con \cdot: a\cdot b\cdot c → a*b*c
+  // 4) Multiplicación con \cdot: a\cdot b\cdot c → a*b*c
   s = s.replace(/\\cdot/g, '*');
 
   // 5) Exponenciación con llaves: x^{n} → x**n
@@ -39,6 +53,24 @@ export function parseLatex(latex: string): string {
   // 6) Exponenciación sin llaves: x^2 → x**2
   s = s.replace(/([A-Za-z0-9]+)\^([0-9]+)/g, '$1**$2');
 
-  // 7) Limpieza de espacios múltiples
+  // 7) Funciones trigonométricas y logaritmos según modo
+  if (mode === 'numpy') {
+    s = s.replace(/\\sin/g, 'np.sin');
+    s = s.replace(/\\cos/g, 'np.cos');
+    s = s.replace(/\\tan/g, 'np.tan');
+    s = s.replace(/\\exp/g, 'np.exp');
+    s = s.replace(/\\log/g, 'np.log');
+    // También sqrt se convierte a np.sqrt cuando sea necesario en el backend
+    s = s.replace(/sqrt\(/g, 'np.sqrt(');
+  } else {
+    s = s.replace(/\\sin/g, 'sin');
+    s = s.replace(/\\cos/g, 'cos');
+    s = s.replace(/\\tan/g, 'tan');
+    s = s.replace(/\\exp/g, 'exp');
+    s = s.replace(/\\log/g, 'log');
+    // sqrt queda como sqrt(  para SymPy
+  }
+
+  // 8) Limpieza de espacios redundantes
   return s.replace(/\s+/g, ' ').trim();
 }

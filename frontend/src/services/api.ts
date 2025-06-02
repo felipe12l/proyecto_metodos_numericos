@@ -22,3 +22,16 @@ export const secante = (payload: {
 }) => {
   return api.post('/secante', payload);
 };
+
+export const fixedPoint = (payload: {
+  funcion: string;
+  derivada: string;
+  error_porcentaje: number;
+  xi: number;
+}) => api.post('/fixed_point', payload);
+
+export const gaussSeidel = (payload: {
+  A: number[][];
+  b: number[];
+  error_porcentaje: number;
+}) => api.post('/gauss_seidel', payload);

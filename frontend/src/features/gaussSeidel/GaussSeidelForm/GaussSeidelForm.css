@@ -1,0 +1,62 @@
+/* src/features/gaussSeidel/GaussSeidelForm/GaussSeidelForm.css */
+
+.gs-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.gs-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gs-section-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.gs-matrix-container {
+  overflow-x: auto;
+}
+
+.gs-matrix {
+  border-collapse: collapse;
+  width: max-content;
+}
+
+.gs-matrix td {
+  padding: 0.25rem;
+  text-align: center;
+}
+
+.gs-vector-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.gs-vector-inputs {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.gs-error {
+  color: #dc2626;
+  font-size: 0.9rem;
+}
+
+.gs-submit {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.gs-submit:hover {
+  background-color: #1e40af;
+}

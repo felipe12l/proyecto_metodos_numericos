@@ -13,6 +13,14 @@ export default defineConfig({
       '/secante': {
         target: 'http://localhost:3001',
         changeOrigin: true
+      },
+      '/fixed_point': {
+        target: 'http://localhost:3000',
+        changeOrigin: true
+      },
+      '/gauss_seidel': {
+        target: 'http://localhost:3003',
+        changeOrigin: true
       }
     }
     
