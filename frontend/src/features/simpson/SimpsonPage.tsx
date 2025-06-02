@@ -45,7 +45,7 @@ export default function SimpsonPage() {
         <div className="simpson-result">
           <h3>Resultado de la Integral:</h3>
           <p className="simpson-valor">
-            ∫<sub>{infoCalculo.limite_inferior}</sub>⁽ˡᶦᵐᶥᵗᵉ ⁿᵒ⁾ f(x) dx ≈ <strong>{resultado.toFixed(6)}</strong>
+            ∫<sub>ₐ</sub>ᵇ f(x) dx ≈ <strong>{resultado.toFixed(6)}</strong>
           </p>
 
           <div className="simpson-info">
