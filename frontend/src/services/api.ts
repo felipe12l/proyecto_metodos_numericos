@@ -13,6 +13,16 @@ export const rungeKutta = (payload: {
   final_value: number;
 }) => api.post('/runge_kutta', payload);
 
+export const secante = (payload: {
+  function: string;
+  x0: number;
+  x1: number;
+  iterations: number;
+  tol: number;
+}) => {
+  return api.post('/secante', payload);
+};
+
 export const fixedPoint = (payload: {
   funcion: string;
   derivada: string;
@@ -25,3 +35,9 @@ export const gaussSeidel = (payload: {
   b: number[];
   error_porcentaje: number;
 }) => api.post('/gauss_seidel', payload);
+
+export const jacobi = (payload: {
+  A: number[][];
+  b: number[];
+  error_porcentaje: number;
+}) => api.post('/jacobi', payload);

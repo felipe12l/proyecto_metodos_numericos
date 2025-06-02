@@ -1,0 +1,60 @@
+.jacobi-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  text-align: center; 
+}
+
+  
+.jacobi-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+  
+.jacobi-section-title {
+  font-weight: 600;
+}
+
+.jacobi-matrix-container,
+.jacobi-vector-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.jacobi-matrix {
+  border-collapse: collapse;
+  width: max-content;
+}
+
+.jacobi-matrix td {
+  padding: 0.25rem;
+  text-align: center;
+}
+
+.jacobi-vector-inputs {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.jacobi-error {
+  color: #dc2626;
+  font-size: 0.9rem;
+}
+
+.jacobi-submit {
+  margin-top: 1rem;
+  align-self: center;
+  padding: 0.5rem 1rem;
+  background: #2b6cb0;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.jacobi-submit:hover {
+  background: #2b6cb0;
+}

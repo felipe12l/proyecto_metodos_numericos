@@ -10,6 +10,10 @@ export default defineConfig({
         target: 'http://localhost:3006',
         changeOrigin: true
       },
+      '/secante': {
+        target: 'http://localhost:3001',
+        changeOrigin: true
+      },
       '/fixed_point': {
         target: 'http://localhost:3000',
         changeOrigin: true
@@ -17,7 +21,12 @@ export default defineConfig({
       '/gauss_seidel': {
         target: 'http://localhost:3003',
         changeOrigin: true
+      },
+      '/jacobi': {
+        target: 'http://localhost:3002',
+        changeOrigin: true
       }
     }
+    
   }
 })

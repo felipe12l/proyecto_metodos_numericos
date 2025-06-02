@@ -1,5 +1,5 @@
  #Se esta utilizando la version 3 del formato de archivo Docker Compose
-
+# docker compose up --build
 services: # Se definen todos los contenedores a crear y administrar
   microservice-fixed-point:
     build: ./backend/fixed_point # Indica la construccion de la imagen a partir del Dockerfile de fixed_point
