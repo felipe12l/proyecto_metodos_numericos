@@ -41,3 +41,10 @@ export const jacobi = (payload: {
   b: number[];
   error_porcentaje: number;
 }) => api.post('/jacobi', payload);
+
+export const simpson = (payload: {
+  funcion: string;
+  limite_inferior: number;
+  limite_superior: number;
+  intervalos: number;
+}) => api.post('/simpson', payload);

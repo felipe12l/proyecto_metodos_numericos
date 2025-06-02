@@ -10,7 +10,7 @@ import JacobiPage       from './features/jacobi/JacobiPage'
 //import NewtonRaphsonPage from './features/newtonRaphson/NewtonRaphsonPage'
 import SecantePage from './features/secante/SecantePage'
 //import TrapecioPage     from './features/trapecio/TrapecioPage'
-//import SimpsonPage      from './features/simpson/SimpsonPage'
+import SimpsonPage      from './features/simpson/SimpsonPage'
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
           <Route path="/runge-kutta"     element={<RungeKuttaPage />} />
           <Route path="/secante"         element={<SecantePage />} />
           <Route path="/trapecio"        element={<RungeKuttaPage />} />
-          <Route path="/simpson"         element={<RungeKuttaPage />} />
+          <Route path="/simpson"         element={<SimpsonPage />} />
         </Routes>
       </main>
     </BrowserRouter>
