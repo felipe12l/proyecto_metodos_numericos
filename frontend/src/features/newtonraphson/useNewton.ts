@@ -39,6 +39,12 @@ export function useNewton() {
                 try { y = f(x); } catch {}
                 points.push({ x, y });
             }
+            // Agregar el punto raíz como especial
+            if (resp.data.resultado !== null && !isNaN(resp.data.resultado)) {
+                let yRoot = NaN;
+                try { yRoot = f(resp.data.resultado); } catch {}
+                points.push({ x: resp.data.resultado, y: yRoot, special: true });
+            }
             setFuncPlot(points);
 
         } catch (err: any) {

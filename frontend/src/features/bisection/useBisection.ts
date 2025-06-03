@@ -31,21 +31,8 @@ export function useBisection() {
             setResultado(resp.data.resultado);
             setIteraciones(resp.data.iteraciones);
 
-            // Graficar la función en el rango [a, b]
-            const fStr = parseLatex(latex, 'numpy');
-            // eslint-disable-next-line no-new-func
-            const f = new Function('x', `return ${fStr};`);
-            const x0 = parseFloat(a);
-            const x1 = parseFloat(b);
-            const N = 100;
-            const points = [];
-            for (let i = 0; i <= N; i++) {
-                const x = x0 + (x1 - x0) * i / N;
-                let y = NaN;
-                try { y = f(x); } catch {}
-                points.push({ x, y });
-            }
-            setFuncPlot(points);
+            // Usa los puntos que vienen del backend
+            setFuncPlot(resp.data.puntos || []);
 
         } catch (err: any) {
             setError(err.response?.data?.error || err.message);

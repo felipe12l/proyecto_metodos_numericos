@@ -1,4 +1,4 @@
-import ChartWithZoom from "../../components/common/ChartWithZoom/ChartWithZoom";
+import ChartWithRoot from "../../components/common/ChartWithZoom/ChartWithRoot";
 import NewtonForm from "./NewtonForm/NewtonForm";
 import { useNewton } from "./useNewton";
 
@@ -22,7 +22,7 @@ export default function NewtonPage() {
                 setX0={setX0}
                 tolerance={tolerance}
                 setTolerance={setTolerance}
-                error={error} // <--- aquí se pasa el error
+                error={error}
                 onSubmit={e => { e.preventDefault(); calculate(); }}
             />
             {resultado !== null && (
@@ -31,7 +31,7 @@ export default function NewtonPage() {
                     <p>Iteraciones: <b>{iteraciones}</b></p>
                 </div>
             )}
-            {funcPlot.length > 0 && <ChartWithZoom data={funcPlot} />}
+            {funcPlot.length > 0 && <ChartWithRoot data={funcPlot} />}
         </div>
     );
 }
