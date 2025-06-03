@@ -14,16 +14,14 @@ def newton_raphson():
     if not data or any(field not in data for field in required_fields):
         return jsonify({"error": "Faltan parámetros. Se requieren 'funcion', 'error_porcentaje' y 'x0'."}), 400
 
-    # Asignar la función y su derivada (en formato de cadena).
     funcion_str = data['funcion']
-    # Nota: No se puede calcular la derivada simbólica directamente con numpy.
-    # Para derivadas simbólicas se debe usar sympy, como está implementado abajo.
-    # Numpy solo sirve para cálculos numéricos, no simbólicos.
     x = sp.symbols('x')
     try:
-        funcion_sympy = sp.sympify(funcion_str, locals={'np': np})
+        funcion_sympy = sp.sympify(funcion_str)
         derivada_sympy = sp.diff(funcion_sympy, x)
-        derivada_str = str(derivada_sympy)
+        # Crear funciones numéricas usando lambdify
+        f = sp.lambdify(x, funcion_sympy, modules=["numpy"])
+        df = sp.lambdify(x, derivada_sympy, modules=["numpy"])
     except Exception as e:
         return jsonify({"error": "No se puede calcular la derivada de la función."}), 400
 
@@ -33,11 +31,11 @@ def newton_raphson():
     except ValueError:
         return jsonify({"error": "El parámetro 'error_porcentaje' debe ser un número."}), 400
 
-    # Validar y convertir 'xi' a número.
+    # Validar y convertir 'x0' a número.
     try:
         xi = float(data['x0'])
     except ValueError:
-        return jsonify({"error": "El parámetro 'xi' debe ser un número."}), 400
+        return jsonify({"error": "El parámetro 'x0' debe ser un número."}), 400
 
     # Convertir error porcentual a tolerancia (valor decimal).
     tolerance = error_porcentaje / 100.0
@@ -50,49 +48,23 @@ def newton_raphson():
         except ValueError:
             return jsonify({"error": "El parámetro 'max_iter' debe ser un entero."}), 400
 
-    # Validar la sintaxis de la función y su derivada evaluándolas en un valor de prueba (x = 1).
-    try:
-        eval(funcion_str, {"x": 1, "np": np})
-    except Exception as e:
-        return jsonify({"error": "Error en la sintaxis de la función."}), 400
-
-    try:
-        eval(derivada_str, {"x": 1, "np": np})
-    except Exception as e:
-        return jsonify({"error": "Error en la sintaxis de la derivada."}), 400
-
-    # Definir funciones para evaluar f(x) y f'(x) usando eval.
-    def f(x):
-        try:
-            return eval(funcion_str, {"x": x, "np": np})
-        except ZeroDivisionError:
-            raise ValueError("Ocurrió una división por cero durante el cálculo de la función.")
-        except Exception as e:
-            raise ValueError("Error al evaluar la función.")
-        
-    def df(x):
-        try:
-            return eval(derivada_str, {"x": x, "np": np})
-        except Exception as e:
-            raise ValueError("Error al evaluar la derivada.")
-
     iter_num = 0
     while iter_num < max_iter:
         try:
             fx = f(xi)
             dfx = df(xi)
         except Exception as e:
-            return jsonify({"error": str(e)}), 400
+            return jsonify({"error": f"Error al evaluar la función o su derivada: {str(e)}"}), 400
 
         # Verificar que la derivada no sea cero.
         if dfx == 0:
-            return jsonify({"error": "La derivada es cero en x = {}. No se puede continuar.".format(xi)}), 400
+            return jsonify({"error": f"La derivada es cero en x = {xi}. No se puede continuar."}), 400
 
-        # Aplicar la fórmula de Newton-Raphson con manejo de división por cero.
+        # Aplicar la fórmula de Newton-Raphson.
         try:
             xn = xi - fx / dfx
         except ZeroDivisionError:
-            return jsonify({"error": "Ocurrió una división por cero durante el cálculo en x = {}.".format(xi)}), 400
+            return jsonify({"error": f"Ocurrió una división por cero durante el cálculo en x = {xi}."}), 400
 
         # Verificar convergencia usando error relativo.
         if xn != 0:

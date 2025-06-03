@@ -17,7 +17,7 @@ export function useNewton() {
         setIteraciones(null);
         try {
             const payload: any = {
-                funcion: parseLatex(latex, 'numpy'),
+                funcion: parseLatex(latex),
                 x0: parseFloat(x0),
                 error_porcentaje: parseFloat(tolerance)
             };
@@ -26,7 +26,7 @@ export function useNewton() {
             setIteraciones(resp.data.iteraciones);
 
             // Graficar la función en un rango alrededor de x0
-            const fStr = parseLatex(latex, 'numpy');
+            const fStr = parseLatex(latex);
             // eslint-disable-next-line no-new-func
             const f = new Function('x', `return ${fStr};`);
             const xStart = Math.max(0, parseFloat(x0) - 10);
