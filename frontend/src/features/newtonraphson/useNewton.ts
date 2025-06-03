@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { parseLatex } from "../../utils/parseLatex";
+import { newton } from "../../services/api";
 
 export function useNewton() {
     const [latex, setLatex] = useState('');

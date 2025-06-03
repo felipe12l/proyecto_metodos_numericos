@@ -15,6 +15,7 @@ import TrapecioPage from './features/trapecio/TrapecioPage'
 //import TrapecioPage     from './features/trapecio/TrapecioPage'
 import SimpsonPage      from './features/simpson/SimpsonPage'
 import BisectionPage from './features/bisection/BisectionPage'
+import NewtonPage from './features/newtonraphson/NewtonPage'
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
           <Route path="/fixed-point"     element={<FixedPointPage />} />
           <Route path="/gauss-seidel"    element={<GaussSeidelPage />} />
           <Route path="/jacobi"          element={<JacobiPage />} />
-          <Route path="/newton-raphson"  element={<RungeKuttaPage />} />
+          <Route path="/newton-raphson"  element={<NewtonPage />} />
           <Route path="/runge-kutta"     element={<RungeKuttaPage />} />
           <Route path="/secante"         element={<SecantePage />} />
           <Route path="/trapecio"        element={<TrapecioPage />} />
