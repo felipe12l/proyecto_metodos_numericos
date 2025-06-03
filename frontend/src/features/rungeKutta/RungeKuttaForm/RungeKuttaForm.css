@@ -5,7 +5,9 @@
 }
 
 .rk-keyboard-wrapper {
-  align-self: center;
+  display: flex;
+  flex-direction: column; /* Para que el label esté arriba del teclado */
+  align-items: center; 
 }
 
 .rk-numbers {
@@ -30,5 +32,5 @@
 
 }
 .rk-submit:hover {
-  background: #2b6cb0;
+  background: #059669;
 }

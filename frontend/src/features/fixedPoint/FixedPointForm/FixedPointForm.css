@@ -1,0 +1,47 @@
+/* frontend/src/features/fixedPoint/FixedPointForm/FixedPointForm.css */
+
+.fp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fp-funcion-keyboard-wrapper {
+  display: flex;
+  flex-direction: column; /* Para que el label esté arriba del teclado */
+  align-items: center;     /* Centra horizontalmente el MathKeyboard */
+}
+
+.fp-transform-keyboard-wrapper {
+  display: flex;
+  flex-direction: column; /* Para que el label esté arriba del teclado */
+  align-items: center;     /* Centra horizontalmente el MathKeyboard */
+}
+
+.fp-numbers {
+  display: flex;
+  gap: 1rem;
+  /*margin-top: 0.5rem;*/
+  align-self: center;
+}
+
+.fp-error {
+  color: #dc2626;
+  font-size: 0.9rem;
+}
+
+.fp-submit {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  background: #3182ce;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  align-self: center;
+  margin-bottom: 10px;
+
+}
+.fp-submit:hover {
+  background-color: #059669;
+}

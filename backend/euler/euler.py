@@ -36,6 +36,7 @@ def euler_endpoint():
     initial_y=data.get("initial_y")
     step=data.get("step")
     final_value=data.get("final_value")
+    ## resolver
     if None in (equation, initial_x, initial_y, step, final_value):
         return jsonify({"error": "Parámetros incompletos"}), 400
     try:

@@ -19,7 +19,7 @@ export function useRungeKutta() {
     setError(null);
     try {
       const payload = {
-        equation: parseLatex(latex),
+        equation: parseLatex(latex, 'sympy'),
         initial_x:  parseFloat(initialX),
         initial_y:  parseFloat(initialY),
         step:       parseFloat(step),

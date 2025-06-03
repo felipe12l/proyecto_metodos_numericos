@@ -23,25 +23,35 @@ ChartJS.register(
   zoomPlugin
 );
 
-interface Point { x: number; y: number; }
+interface Point { x: number; y: number; special?: boolean; }
 interface Props { data: Point[]; }
 
 export default function ChartWithZoom({ data }: Props) {
-  const labels = data.map(p => p.x);
+  const functionPoints = data.filter(p => !p.special);
+  const resultPoints = data.filter(p => p.special);
+
   const chartData: ChartData<'line'> = {
-    labels,
-    datasets: [{
-      label: 'y(x)',
-      data: data.map(p => p.y),
-      fill: false,
-      borderColor: 'var(--chart-line-color)',
-      backgroundColor: 'var(--chart-fill-color)',
-      borderWidth: 2,
-      pointRadius: 4,
-      pointBackgroundColor: '#ff5722',
-      pointBorderColor: '#e91e63',
-      pointBorderWidth: 1.5,
-    }]
+    labels: functionPoints.map(p => p.x),
+    datasets: [
+      {
+        label: 'f(x)',
+        data: functionPoints.map(p => ({ x: p.x, y: p.y })),
+        fill: false,
+        borderColor: 'var(--chart-line-color)',
+        backgroundColor: 'var(--chart-fill-color)',
+        borderWidth: 2,
+        pointRadius: 2,
+      },
+      {
+        label: 'Raíz aproximada',
+        data: resultPoints.map(p => ({ x: p.x, y: p.y })),
+        showLine: false,
+        pointRadius: 6,
+        pointBackgroundColor: 'red',
+        pointBorderColor: 'black',
+        pointBorderWidth: 2,
+      }
+    ]
   };
 
   const options: ChartOptions<'line'> = {
