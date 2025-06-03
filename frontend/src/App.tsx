@@ -31,10 +31,9 @@ function App() {
           <Route path="/runge-kutta"     element={<RungeKuttaPage />} />
           <Route path="/secante"         element={<SecantePage />} />
           <Route path="/trapecio"        element={<TrapecioPage />} />
-          <Route path="/simpson"         element={<RungeKuttaPage />} />
+          <Route path="/simpson"         element={<SimpsonPage />} />
           <Route path="/trapecio"        element={<RungeKuttaPage />} />
           <Route path="/euler"           element={<EulerPage/>} />
-          <Route path="/simpson"         element={<SimpsonPage />} />
         </Routes>
       </main>
     </BrowserRouter>

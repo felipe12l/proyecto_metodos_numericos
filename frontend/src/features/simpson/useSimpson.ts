@@ -1,5 +1,3 @@
-// src/features/simpson/useSimpson.ts
-
 import { useState } from 'react';
 import axios from 'axios';
 import { parseLatex } from '../../utils/parseLatex';

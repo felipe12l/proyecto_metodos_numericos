@@ -1,5 +1,3 @@
-// src/utils/parseLatex.ts
-
 /**
  * Convierte expresiones LaTeX sencillas a sintaxis compatible con NumPy:
  * - \left( … \right)                    → ( … )

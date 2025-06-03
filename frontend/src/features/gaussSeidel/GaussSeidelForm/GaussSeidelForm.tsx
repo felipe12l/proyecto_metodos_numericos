@@ -1,5 +1,3 @@
-// src/features/gaussSeidel/GaussSeidelForm/GaussSeidelForm.tsx
-
 import React, { FormEvent } from 'react';
 import NumberInput from '../../../components/common/NumberInput/NumberInput';
 import StringInput from '../../../components/common/StringInput/StringInput';

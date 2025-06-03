@@ -1,5 +1,3 @@
-// frontend/src/features/fixedPoint/FixedPointPage.tsx
-
 import React from 'react';
 import FixedPointForm from './FixedPointForm/FixedPointForm';
 import { useFixedPoint } from './useFixedPoint';
@@ -14,38 +12,30 @@ export default function FixedPointPage() {
     xi, setXi,
     resultado,
     iteraciones,
-    funcPlot,    // La serie para f(x)
-    derivPlot,   // La serie para g(x)
+    funcPlot,    
+    derivPlot,   
     error,
     calculate
   } = useFixedPoint();
 
-  // 1) Serie de iteraciones para graficar puntos:
-  //    Por ejemplo, (x_n, g(x_n)) → para ver cómo g(x) acerca x a la convergencia
+  //Serie de iteraciones para graficar puntos
   const iterData = iteraciones.map((xVal) => ({
     x: xVal,
-    y: xVal   // si quisieras graficar (x_n, f(x_n)) sustituye `y: f(xVal)`
+    y: xVal   
   }));
-
-  // 2) Mantenemos funcPlot y derivPlot intactos: ya vienen como {x, y}
-
-  // 3) Combinar los 3 datasets para pasarlos a ChartWithZoom:
-  //    ChartWithZoom recibe un array `data: { x: number; y: number }[]`,
-  //    pero si queremos 3 series, tendremos que extender ChartWithZoom
-  //    para aceptar varios datasets. Vamos a hacerlo manualmente aquí:
 
   // Creamos 3 objetos para cada “serie”:
   const datasets = [
     {
-      name: 'f(x)',         // etiqueta
-      points: funcPlot      // curve f(x) en modo continuo
+      name: 'f(x)',        
+      points: funcPlot      
     },
     {
-      name: 'g(x)',         // etiqueta
-      points: derivPlot     // curve g(x)
+      name: 'g(x)',        
+      points: derivPlot     
     },
     {
-      name: 'Iteraciones',  // iterData es un conjunto de puntos discretos
+      name: 'Iteraciones',  
       points: iterData
     }
   ];

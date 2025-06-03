@@ -1,5 +1,3 @@
-// src/features/gaussSeidel/GaussSeidelPage.tsx
-
 import React from 'react';
 import GaussSeidelForm from './GaussSeidelForm/GaussSeidelForm';
 import { useGaussSeidel } from './useGaussSeidel';

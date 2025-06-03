@@ -1,5 +1,3 @@
-// src/features/simpson/SimpsonPage.tsx
-
 import React from 'react';
 import SimpsonForm from './SimpsonForm/SimpsonForm';
 import { useSimpson } from './useSimpson';

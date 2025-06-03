@@ -1,6 +1,7 @@
 import ChartWithZoom from "../../components/common/ChartWithZoom/ChartWithZoom";
 import EulerForm from "./EulerForm/EulerForm";
 import { useEuler } from "./useEuler";
+import './EulerPage.css';
 
 export default function EulerPage() {
   const {

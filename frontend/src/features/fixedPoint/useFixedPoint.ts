@@ -1,5 +1,3 @@
-// frontend/src/features/fixedPoint/useFixedPoint.ts
-
 import { useState } from 'react';
 import axios from 'axios';
 import { parseLatex } from '../../utils/parseLatex';

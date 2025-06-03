@@ -1,5 +1,3 @@
-// src/features/simpson/SimpsonForm/SimpsonForm.tsx
-
 import React, { FormEvent } from 'react';
 import MathKeyboard from '../../../components/common/EquationKeyboard/MathKeyboard';
 import NumberInput from '../../../components/common/NumberInput/NumberInput';
