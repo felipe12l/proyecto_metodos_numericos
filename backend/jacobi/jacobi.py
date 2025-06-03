@@ -37,19 +37,21 @@ def rearrange_to_diagonal_dominance(A, b):
 
     return A_reorganizado, b_reorganizado
 
+def contiene_valores_no_cero(matriz):
+    return np.any(matriz != 0)
 
 def jacobi_method(A, b, tol=1e-6, max_iter=100):
     n = len(A)
     x = np.zeros(n)
     x_new = np.zeros(n)
 
-    for _ in range(max_iter):
+    for m in range(max_iter):
         for i in range(n):
             sum_ = sum(A[i][j] * x[j] for j in range(n) if j != i)
             x_new[i] = (b[i] - sum_) / A[i][i]
 
         if np.linalg.norm(x_new - x, ord=np.inf) < tol:
-            return x_new.tolist(), True
+            return x_new.tolist(), True, m
 
         x = x_new.copy()
 
@@ -66,12 +68,22 @@ def solve_jacobi():
     A = np.array(data["A"], dtype=float)
     b = np.array(data["b"], dtype=float)
 
+    if not contiene_valores_no_cero(A) or not contiene_valores_no_cero(b):
+        return jsonify({"solution": None,
+        "converged": False,
+        "iterations": 0})
+
     if not is_diagonally_dominant(A):
         A, b = rearrange_to_diagonal_dominance(A, b)
 
-    solution, converged = jacobi_method(A, b)
+    solution, converged, iteracion = jacobi_method(A, b)
 
-    return jsonify({"solution": solution, "converged": converged})
+    return jsonify({
+        "solution": solution,
+        "converged": converged,
+        "iterations": iteracion
+    })
+
 
 
 if __name__ == '__main__':

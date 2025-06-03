@@ -1,0 +1,42 @@
+/* src/features/simpson/SimpsonForm/SimpsonForm.css */
+
+.simpson-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.simpson-funcion-keyboard-wrapper {
+  display: flex;
+  flex-direction: column; /* Para que el label esté arriba del teclado */
+  align-items: center;     /* Centra horizontalmente el MathKeyboard */
+}
+
+.simpson-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  flex-direction: row; /* Para que el label esté arriba del teclado */
+  align-items: center;     /* Centra horizontalmente el MathKeyboard */
+  justify-content: center; /* 🔹 Esto centra horizontalmente los elementos */
+}
+
+.simpson-error {
+  color: #dc2626;
+  font-size: 0.9rem;
+}
+
+.simpson-submit {
+  align-self: flex-start;
+  padding: 0.5rem 1rem;
+  background: #3182ce;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  align-self: center;
+  margin-bottom: 10px;
+}
+.simpson-submit:hover {
+  background-color: #059669;
+}

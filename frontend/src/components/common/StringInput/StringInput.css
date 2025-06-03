@@ -1,0 +1,14 @@
+.string-input {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+}
+.string-input label {
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+.string-input input {
+  padding: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}

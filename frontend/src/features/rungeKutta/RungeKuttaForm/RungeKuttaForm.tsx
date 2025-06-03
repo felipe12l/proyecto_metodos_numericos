@@ -29,6 +29,7 @@ export default function RungeKuttaForm({
   return (
     <form className="rk-form" onSubmit={onSubmit}>
       <div className='rk-keyboard-wrapper'>
+        <label htmlFor="latex">Función f(x):</label>
         <MathKeyboard latex={latex} onChange={setLatex} />
       </div>
       <div className="rk-numbers">
