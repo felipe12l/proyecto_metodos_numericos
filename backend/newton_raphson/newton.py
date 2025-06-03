@@ -1,14 +1,12 @@
 from flask import Flask, request, jsonify
 import sympy as sp
+import numpy as np
 
 app = Flask(__name__)
-
 
 @app.route('/newton_raphson', methods=['POST'])
 def newton_raphson():
     data = request.get_json()
-
-    # Verificar que se hayan enviado todos los parámetros necesarios.
     required_fields = ['funcion', 'error_porcentaje', 'x0']
     if not data or any(field not in data for field in required_fields):
         return jsonify({"error": "Faltan parámetros. Se requieren 'funcion', 'error_porcentaje' y 'x0'."}), 400
@@ -18,28 +16,22 @@ def newton_raphson():
     try:
         funcion_sympy = sp.sympify(funcion_str)
         derivada_sympy = sp.diff(funcion_sympy, x)
-        # Crear funciones numéricas usando lambdify
         f = sp.lambdify(x, funcion_sympy, modules=["numpy"])
         df = sp.lambdify(x, derivada_sympy, modules=["numpy"])
     except Exception as e:
         return jsonify({"error": "No se puede calcular la derivada de la función."}), 400
 
-    # Validar y convertir 'error_porcentaje' a número.
     try:
         error_porcentaje = float(data['error_porcentaje'])
     except ValueError:
         return jsonify({"error": "El parámetro 'error_porcentaje' debe ser un número."}), 400
 
-    # Validar y convertir 'x0' a número.
     try:
         xi = float(data['x0'])
     except ValueError:
         return jsonify({"error": "El parámetro 'x0' debe ser un número."}), 400
 
-    # Convertir error porcentual a tolerancia (valor decimal).
     tolerance = error_porcentaje / 100.0
-
-    # Parámetro opcional: número máximo de iteraciones.
     max_iter = 1000
     if 'max_iter' in data:
         try:
@@ -48,37 +40,61 @@ def newton_raphson():
             return jsonify({"error": "El parámetro 'max_iter' debe ser un entero."}), 400
 
     iter_num = 0
+    xn = xi
     while iter_num < max_iter:
         try:
-            fx = f(xi)
-            dfx = df(xi)
+            fx = f(xn)
+            dfx = df(xn)
         except Exception as e:
             return jsonify({"error": f"Error al evaluar la función o su derivada: {str(e)}"}), 400
 
-        # Verificar que la derivada no sea cero.
         if dfx == 0:
-            return jsonify({"error": f"La derivada es cero en x = {xi}. No se puede continuar."}), 400
+            return jsonify({"error": f"La derivada es cero en x = {xn}. No se puede continuar."}), 400
 
-        # Aplicar la fórmula de Newton-Raphson.
         try:
-            xn = xi - fx / dfx
+            x_next = xn - fx / dfx
         except ZeroDivisionError:
-            return jsonify({"error": f"Ocurrió una división por cero durante el cálculo en x = {xi}."}), 400
+            return jsonify({"error": f"Ocurrió una división por cero durante el cálculo en x = {xn}."}), 400
 
-        # Verificar convergencia usando error relativo.
-        if xn != 0:
-            if abs(xn - xi) / abs(xn) < tolerance:
-                return jsonify({"resultado": xn, "iteraciones": iter_num}), 200
+        if x_next != 0:
+            if abs(x_next - xn) / abs(x_next) < tolerance:
+                xn = x_next
+                break
         else:
-            if abs(xn - xi) < tolerance:
-                return jsonify({"resultado": xn, "iteraciones": iter_num}), 200
+            if abs(x_next - xn) < tolerance:
+                xn = x_next
+                break
 
-        xi = xn
+        xn = x_next
         iter_num += 1
 
-    # Si se alcanza el máximo de iteraciones, se retorna el último valor calculado.
-    return jsonify({"resultado": xn, "iteraciones": max_iter}), 200
+    # Generar puntos para graficar la función en un rango alrededor de x0
+    try:
+        x0 = float(data['x0'])
+    except Exception:
+        x0 = xn
+    x_min = min(x0, xn) - 5
+    x_max = max(x0, xn) + 5
+    xs = np.linspace(x_min, x_max, 120)
+    puntos = []
+    for xx in xs:
+        try:
+            yy = f(xx)
+        except Exception:
+            yy = None
+        puntos.append({"x": float(xx), "y": float(yy)})
+    # Agregar el punto raíz como especial
+    try:
+        y_root = f(xn)
+    except Exception:
+        y_root = None
+    puntos.append({"x": float(xn), "y": float(y_root), "special": True})
 
+    return jsonify({
+        "resultado": xn,
+        "iteraciones": iter_num,
+        "puntos": puntos
+    }), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3000)

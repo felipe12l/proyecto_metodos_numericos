@@ -9,7 +9,7 @@ export function useNewton() {
     const [resultado, setResultado] = useState<number | null>(null);
     const [iteraciones, setIteraciones] = useState<number | null>(null);
     const [error, setError] = useState<string | null>(null);
-    const [funcPlot, setFuncPlot] = useState<{ x: number; y: number }[]>([]);
+    const [funcPlot, setFuncPlot] = useState<{ x: number; y: number; special?: boolean }[]>([]);
 
     const calculate = async () => {
         setError(null);
@@ -17,7 +17,7 @@ export function useNewton() {
         setIteraciones(null);
         try {
             const payload: any = {
-                funcion: parseLatex(latex),
+                funcion: parseLatex(latex, 'sympy'),
                 x0: parseFloat(x0),
                 error_porcentaje: parseFloat(tolerance)
             };
@@ -25,27 +25,8 @@ export function useNewton() {
             setResultado(resp.data.resultado);
             setIteraciones(resp.data.iteraciones);
 
-            // Graficar la función en un rango alrededor de x0
-            const fStr = parseLatex(latex);
-            // eslint-disable-next-line no-new-func
-            const f = new Function('x', `return ${fStr};`);
-            const xStart = Math.max(0, parseFloat(x0) - 10);
-            const xEnd = parseFloat(x0) + 10;
-            const N = 100;
-            const points = [];
-            for (let i = 0; i <= N; i++) {
-                const x = xStart + (xEnd - xStart) * i / N;
-                let y = NaN;
-                try { y = f(x); } catch {}
-                points.push({ x, y });
-            }
-            // Agregar el punto raíz como especial
-            if (resp.data.resultado !== null && !isNaN(resp.data.resultado)) {
-                let yRoot = NaN;
-                try { yRoot = f(resp.data.resultado); } catch {}
-                points.push({ x: resp.data.resultado, y: yRoot, special: true });
-            }
-            setFuncPlot(points);
+            // Usa los puntos que vienen del backend
+            setFuncPlot(resp.data.puntos || []);
 
         } catch (err: any) {
             setError(err.response?.data?.error || err.message);
