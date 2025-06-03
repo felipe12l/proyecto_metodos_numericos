@@ -3,6 +3,7 @@
 import React from 'react';
 import GaussSeidelForm from './GaussSeidelForm/GaussSeidelForm';
 import { useGaussSeidel } from './useGaussSeidel';
+import ConvergenceChart from '../../components/common/ConvergenceChart/ConvergenceChart';
 import './GaussSeidelPage.css';
 
 export default function GaussSeidelPage() {
@@ -13,6 +14,7 @@ export default function GaussSeidelPage() {
     errorPorcentaje,
     resultado,
     iteraciones,
+    historial,
     error,
     updateA,
     updateB,
@@ -48,7 +50,7 @@ export default function GaussSeidelPage() {
           <ul>
             {resultado.map((xi, idx) => (
               <li key={idx}>
-                x<sub>{idx + 1}</sub> = {xi.toFixed(6)}
+                <strong>x<sub>{idx + 1}</sub></strong> = {xi.toFixed(6)}
               </li>
             ))}
           </ul>
@@ -56,6 +58,13 @@ export default function GaussSeidelPage() {
             Iteraciones realizadas: <strong>{iteraciones}</strong>
           </p>
         </div>
+      )}
+      {/* Mostrar gráfica de convergencia solo si hay al menos 2 pasos */}
+      {historial && historial.length > 1 && (
+        <>
+          <h3>Convergencia de cada variable por iteración</h3>
+          <ConvergenceChart historial={historial} />
+        </>
       )}
     </div>
   );

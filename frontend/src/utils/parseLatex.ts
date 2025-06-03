@@ -3,6 +3,7 @@
 /**
  * Convierte expresiones LaTeX sencillas a sintaxis compatible con NumPy:
  * - \left( … \right)                    → ( … )
+ * - e^{-x}                               → exp(-x) (o np.exp(-x) en modo='numpy')
  * - \sin(x), \cos(x), etc.              → np.sin(x), np.cos(x), etc.   (cuando mode='numpy')
  * - \frac{a}{b}                         → (a)/(b)
  * - \frac a b (sin llaves, ej. \frac92) → (a)/(b)
@@ -21,9 +22,7 @@ export function parseLatex(
   s = s.replace(/\\left/g, '').replace(/\\right/g, '');
 
   // 0.1) Manejar fracciones “sin llaves” del tipo \frac a b o \frac92
-  // Patrón: \frac<token1><token2>, donde token puede ser dígito, letra o expresión parentetizada
-  // Ejemplos: \frac92   →  (9)/(2)
-  //           \frac x y  →  (x)/(y)
+  // Ejemplo: \frac92  →  (9)/(2)
   s = s.replace(
     /\\frac\s*([A-Za-z0-9]+)\s*([A-Za-z0-9]+)/g,
     '($1)/($2)'
@@ -47,28 +46,47 @@ export function parseLatex(
   // 4) Multiplicación con \cdot: a\cdot b\cdot c → a*b*c
   s = s.replace(/\\cdot/g, '*');
 
-  // 5) Exponenciación con llaves: x^{n} → x**n
+  // ────────────────────────────────────────────────────────────────────────────
+  // 5) Casos especiales de e^{expr} para convertir a exp(expr)
+  //    (esto debe ir ANTES de la regla general de exponentes con **)
+  //
+  //    - e^{-x}   →  exp(-x)   (o np.exp(-x) en modo numpy)
+  //    - e^{2x}   →  exp(2x)   (o np.exp(2x) en modo numpy)
+  //
+  //    NOTA: Si viene algo como (e^{-x})-x, primero quitamos paréntesis y luego
+  //    lo convertimos aquí.
+  // ────────────────────────────────────────────────────────────────────────────
+  s = s.replace(/e\^\{([^}]*)\}/g, (_match, expr) => {
+    // si expr = '-x' o '2x', etc.
+    return `exp(${expr})`;
+  });
+
+  // 6) Exponenciación con llaves: x^{n} → x**n
   s = s.replace(/([A-Za-z0-9]+)\^\{([^}]*)\}/g, '$1**$2');
 
-  // 6) Exponenciación sin llaves: x^2 → x**2
+  // 7) Exponenciación sin llaves: x^2 → x**2
   s = s.replace(/([A-Za-z0-9]+)\^([0-9]+)/g, '$1**$2');
 
-  // 7) Funciones trigonométricas y logaritmos según modo
+  // 8) Funciones trigonométricas y logaritmos según modo
   if (mode === 'numpy') {
+    // Convertir "exp(" → "np.exp("
+    s = s.replace(/exp\(/g, 'np.exp(');
     s = s.replace(/\\sin/g, 'np.sin');
     s = s.replace(/\\cos/g, 'np.cos');
     s = s.replace(/\\tan/g, 'np.tan');
-    s = s.replace(/\\exp/g, 'np.exp');
+    s = s.replace(/\\exp/g, 'np.exp'); // si alguien usa \exp
     s = s.replace(/\\log/g, 'np.log');
-    // También sqrt se convierte a np.sqrt cuando sea necesario en el backend
+    // sqrt(...) → np.sqrt(...)
     s = s.replace(/sqrt\(/g, 'np.sqrt(');
   } else {
+    // Modo 'sympy'
+    // Convertir "exp(" → "exp("
     s = s.replace(/\\sin/g, 'sin');
     s = s.replace(/\\cos/g, 'cos');
     s = s.replace(/\\tan/g, 'tan');
     s = s.replace(/\\exp/g, 'exp');
     s = s.replace(/\\log/g, 'log');
-    // sqrt queda como sqrt(  para SymPy
+    // sqrt(...) queda como sqrt(...)
   }
 
   if (mode === 'js') {
@@ -81,5 +99,7 @@ export function parseLatex(
     s = s.replace(/\bexp\b/g, 'Math.exp');
   }
   // 8) Limpieza de espacios redundantes
+
+  // 9) Limpieza de espacios redundantes
   return s.replace(/\s+/g, ' ').trim();
 }

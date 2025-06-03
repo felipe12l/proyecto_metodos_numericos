@@ -6,7 +6,8 @@
 
 .gs-page h2 {
   margin-bottom: 1rem;
-  color: #1e3a8a;
+  color: #ffffff;
+  text-align: center;
 }
 
 .gs-result {
@@ -15,6 +16,14 @@
   padding: 1rem;
   border-radius: 0.375rem;
   color: #1e3a8a;
+
+  display: flex;
+  flex-direction: column; /* Para que el label esté arriba del teclado */
+  align-items: center; 
+
+  width: fit-content;      /* 🔹 Ajusta el ancho al contenido */
+  margin-left: auto;       /* 🔹 Centra horizontalmente */
+  margin-right: auto;      /* 🔹 Centra horizontalmente */
 }
 
 .gs-result h3 {
@@ -24,7 +33,11 @@
 
 .gs-result ul {
   list-style: none;
+  margin-left: 10px;
   padding-left: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem; /* Espacio horizontal entre los elementos */
 }
 
 .gs-result li {

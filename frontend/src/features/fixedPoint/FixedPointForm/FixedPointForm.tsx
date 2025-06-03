@@ -25,11 +25,16 @@ export default function FixedPointForm({
 }: Props) {
   return (
     <form className="fp-form" onSubmit={onSubmit}>
-      <label htmlFor="funcion">Función f(x):</label>
-      <MathKeyboard latex={funcion} onChange={setFuncion} />
+      <div className='fp-funcion-keyboard-wrapper'>
+        <label htmlFor="funcion">Función f(x):</label>
+        <MathKeyboard latex={funcion} onChange={setFuncion} />
+      </div>
 
-      <label htmlFor="derivada">g(x) (transformada):</label>
-      <MathKeyboard latex={derivada} onChange={setDerivada} />
+      <div className='fp-transform-keyboard-wrapper'>
+        <label htmlFor="derivada">g(x) (transformada):</label>
+        <MathKeyboard latex={derivada} onChange={setDerivada} />
+      </div>
+      
 
       <div className="fp-numbers">
         <NumberInput

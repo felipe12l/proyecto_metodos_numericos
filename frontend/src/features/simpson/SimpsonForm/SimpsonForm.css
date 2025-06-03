@@ -1,36 +1,32 @@
-/* frontend/src/features/fixedPoint/FixedPointForm/FixedPointForm.css */
+/* src/features/simpson/SimpsonForm/SimpsonForm.css */
 
-.fp-form {
+.simpson-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.fp-funcion-keyboard-wrapper {
+.simpson-funcion-keyboard-wrapper {
   display: flex;
   flex-direction: column; /* Para que el label esté arriba del teclado */
   align-items: center;     /* Centra horizontalmente el MathKeyboard */
 }
 
-.fp-transform-keyboard-wrapper {
-  display: flex;
-  flex-direction: column; /* Para que el label esté arriba del teclado */
-  align-items: center;     /* Centra horizontalmente el MathKeyboard */
-}
-
-.fp-numbers {
+.simpson-row {
   display: flex;
   gap: 1rem;
-  /*margin-top: 0.5rem;*/
-  align-self: center;
+  flex-wrap: wrap;
+  flex-direction: row; /* Para que el label esté arriba del teclado */
+  align-items: center;     /* Centra horizontalmente el MathKeyboard */
+  justify-content: center; /* 🔹 Esto centra horizontalmente los elementos */
 }
 
-.fp-error {
+.simpson-error {
   color: #dc2626;
   font-size: 0.9rem;
 }
 
-.fp-submit {
+.simpson-submit {
   align-self: flex-start;
   padding: 0.5rem 1rem;
   background: #3182ce;
@@ -40,8 +36,7 @@
   cursor: pointer;
   align-self: center;
   margin-bottom: 10px;
-
 }
-.fp-submit:hover {
+.simpson-submit:hover {
   background-color: #059669;
 }
