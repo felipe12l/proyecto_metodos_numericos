@@ -14,7 +14,7 @@
  */
 export function parseLatex(
   latex: string,
-  mode: 'sympy' | 'numpy' = 'sympy'
+  mode: 'sympy' | 'numpy' | 'js' = 'sympy'
 ): string {
   let s = latex;
 
@@ -88,6 +88,17 @@ export function parseLatex(
     s = s.replace(/\\log/g, 'log');
     // sqrt(...) queda como sqrt(...)
   }
+
+  if (mode === 'js') {
+    s = s.replace(/([A-Za-z0-9\)\]])\*\*([A-Za-z0-9]+)/g, 'Math.pow($1,$2)');
+    s = s.replace(/\bsin\b/g, 'Math.sin');
+    s = s.replace(/\bcos\b/g, 'Math.cos');
+    s = s.replace(/\btan\b/g, 'Math.tan');
+    s = s.replace(/\bsqrt\b/g, 'Math.sqrt');
+    s = s.replace(/\blog\b/g, 'Math.log');
+    s = s.replace(/\bexp\b/g, 'Math.exp');
+  }
+  // 8) Limpieza de espacios redundantes
 
   // 9) Limpieza de espacios redundantes
   return s.replace(/\s+/g, ' ').trim();

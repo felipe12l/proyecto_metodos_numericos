@@ -49,6 +49,12 @@ export const jacobi = (payload: {
   error_porcentaje: number;
 }) => api.post('/jacobi', payload);
 
+export const trapecio = (payload: {
+  function : string;
+  a: number; 
+  b: number;
+  n: number; 
+}) => api.post('/trapecio', payload);
 export const simpson = (payload: {
   funcion: string;
   limite_inferior: number;

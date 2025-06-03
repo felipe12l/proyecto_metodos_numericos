@@ -26,6 +26,9 @@ export default defineConfig({
         target: 'http://localhost:3002',
         changeOrigin: true
       },
+      '/trapecio': {
+        target: 'http://localhost:3007',
+      },
       '/simpson': {
         target: 'http://localhost:3008',
         changeOrigin: true
