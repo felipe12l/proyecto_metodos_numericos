@@ -16,10 +16,13 @@ export default function NewtonPage() {
         <div className="newton-page">
             <h2>Método de Newton-Raphson</h2>
             <NewtonForm
-                latex={latex} setLatex={setLatex}
-                x0={x0} setX0={setX0}
-                tolerance={tolerance} setTolerance={setTolerance}
-                error={error}
+                latex={latex}
+                setLatex={setLatex}
+                x0={x0}
+                setX0={setX0}
+                tolerance={tolerance}
+                setTolerance={setTolerance}
+                error={error} // <--- aquí se pasa el error
                 onSubmit={e => { e.preventDefault(); calculate(); }}
             />
             {resultado !== null && (

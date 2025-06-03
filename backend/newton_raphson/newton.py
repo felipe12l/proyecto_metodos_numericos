@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-import numpy as np
 import sympy as sp
 
 app = Flask(__name__)
