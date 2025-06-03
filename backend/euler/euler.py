@@ -38,12 +38,12 @@ def euler_endpoint():
     final_value=data.get("final_value")
     ## resolver
     if None in (equation, initial_x, initial_y, step, final_value):
-        return jsonify({"error": "Parámetros incompletos"}), 400
+
+        return jsonify({"error": f"Parámetros incompletos i{equation}, initial_x={initial_x}, initial_y={initial_y}, step={step}, final_value={final_value}"}), 400
     try:
-        
         # 3. Ejecutar el método Euler
-        result=euler(equation,float(initial_x),float(final_value),float(initial_y),int(step))
-        return jsonify(result)
+        result = euler(equation, float(initial_x), float(final_value), float(initial_y), int(step))
+        return jsonify({"result": result})  # <--- aquí el cambio
     except Exception as e:
         return jsonify({"error": str(e)}), 400
 if __name__ == "__main__":

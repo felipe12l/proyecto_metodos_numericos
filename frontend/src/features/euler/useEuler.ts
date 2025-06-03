@@ -3,8 +3,8 @@ import { euler } from '../../services/api';
 import { parseLatex } from '../../utils/parseLatex';
 
 export function useEuler() {
-  const [latex, setLatex]           = useState('');
-  const [initialX, setInitialX]     = useState('');
+    const [latex, setLatex]           = useState('');
+    const [initialX, setInitialX]     = useState('');
     const [initialY, setInitialY]     = useState('');
     const [step, setStep]             = useState('');
     const [finalValue, setFinalValue] = useState('');
@@ -14,7 +14,7 @@ export function useEuler() {
         setError(null);
         try {
             const payload = {
-                ecuation: parseLatex(latex),
+                equation: parseLatex(latex),
                 initial_x:  parseFloat(initialX),
                 initial_y:  parseFloat(initialY),
                 step:       parseFloat(step),

@@ -1,8 +1,8 @@
 import ChartWithZoom from "../../components/common/ChartWithZoom/ChartWithZoom";
-import RungeKuttaForm from "../rungeKutta/RungeKuttaForm/RungeKuttaForm";
+import EulerForm from "./EulerForm/EulerForm";
 import { useEuler } from "./useEuler";
 
-export default function RungeKuttaPage() {
+export default function EulerPage() {
   const {
     latex, setLatex,
     initialX, setInitialX,
@@ -16,7 +16,7 @@ export default function RungeKuttaPage() {
   return (
     <div className="euler-page">
       <h2>Euler</h2>
-      <RungeKuttaForm
+      <EulerForm
         latex={latex} setLatex={setLatex}
         initialX={initialX} setInitialX={setInitialX}
         initialY={initialY} setInitialY={setInitialY}
