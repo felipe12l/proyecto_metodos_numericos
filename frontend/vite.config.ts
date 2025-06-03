@@ -33,7 +33,16 @@ export default defineConfig({
       '/euler': {
         target: 'http://localhost:3009',
         changeOrigin: true
+      },
+      '/bisection': {
+        target: 'http://localhost:3005',
+        changeOrigin: true
+      },
+      '/newton_raphson': {
+        target: 'http://localhost:3004',
+        changeOrigin: true
       }
+
     }
     
   }

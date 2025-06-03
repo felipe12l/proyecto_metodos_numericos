@@ -12,6 +12,7 @@ import JacobiPage       from './features/jacobi/JacobiPage'
 import SecantePage from './features/secante/SecantePage'
 //import TrapecioPage     from './features/trapecio/TrapecioPage'
 import SimpsonPage      from './features/simpson/SimpsonPage'
+import BisectionPage from './features/bisection/BisectionPage'
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
       <main style={{ padding: '1rem' }}>
         <Routes>
           <Route path="/"                element={<RungeKuttaPage />} />
-          <Route path="/bisection"       element={<RungeKuttaPage />} />
+          <Route path="/bisection"       element={<BisectionPage />} />
           <Route path="/fixed-point"     element={<FixedPointPage />} />
           <Route path="/gauss-seidel"    element={<GaussSeidelPage />} />
           <Route path="/jacobi"          element={<JacobiPage />} />

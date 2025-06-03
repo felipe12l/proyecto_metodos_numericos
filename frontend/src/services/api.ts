@@ -55,3 +55,10 @@ export const simpson = (payload: {
   limite_superior: number;
   intervalos: number;
 }) => api.post('/simpson', payload);
+export const bisection = (payload: {
+  funcion: string;
+  a: number;
+  b: number;
+  error_porcentaje: number;
+}) => api.post('/bisection', payload);
+  

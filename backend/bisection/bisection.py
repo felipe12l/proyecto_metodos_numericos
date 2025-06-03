@@ -4,7 +4,7 @@ import numpy as np
 app = Flask(__name__)
 
 
-@app.route('/biseccion', methods=['POST'])
+@app.route('/bisection', methods=['POST'])
 def bisection():
     data = request.get_json()
 
@@ -44,8 +44,14 @@ def bisection():
     except Exception as e:
         return jsonify({"error": "Error en la sintaxis de la función."}), 400
 
+    # Si alguno de los extremos es raíz exacta
+    if abs(f_a) < tolerance:
+        return jsonify({"resultado": a, "iteraciones": 0}), 200
+    if abs(f_b) < tolerance:
+        return jsonify({"resultado": b, "iteraciones": 0}), 200
+
     # Verificar que la función cambie de signo en el intervalo [a, b].
-    if f_a * f_b >= 0:
+    if f_a * f_b > 0:
         return jsonify({"error": "La función no cambia de signo en el intervalo [a, b]."}), 400
 
     iter_num = 0
@@ -57,11 +63,10 @@ def bisection():
         # Evaluar la función en el punto medio.
         try:
             f_c = eval(funcion_str, {"x": c, "np": np})
-           
         except Exception as e:
             return jsonify({"error": "Error al evaluar la función en el punto medio."}), 400
         except ZeroDivisionError:
-            return jsonify({"error": "Error de división por cero en la evaluación de la función."}), 4009
+            return jsonify({"error": "Error de división por cero en la evaluación de la función."}), 400
 
         # Si la función en c es casi cero o el intervalo es suficientemente pequeño, consideramos que hemos convergido.
         if abs(f_c) < tolerance or (b - a) / 2.0 < tolerance:
