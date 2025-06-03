@@ -26,13 +26,11 @@ export default defineConfig({
         target: 'http://localhost:3002',
         changeOrigin: true
       },
-<<<<<<< HEAD
       '/trapecio': {
         target: 'http://localhost:3007',
-=======
+      },
       '/simpson': {
         target: 'http://localhost:3008',
->>>>>>> d873a8ee865b78814d5e93123b1d4a7dc86414c8
         changeOrigin: true
       }
     }

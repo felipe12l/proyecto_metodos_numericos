@@ -42,18 +42,15 @@ export const jacobi = (payload: {
   error_porcentaje: number;
 }) => api.post('/jacobi', payload);
 
-<<<<<<< HEAD
 export const trapecio = (payload: {
   function : string;
   a: number; 
   b: number;
   n: number; 
 }) => api.post('/trapecio', payload);
-=======
 export const simpson = (payload: {
   funcion: string;
   limite_inferior: number;
   limite_superior: number;
   intervalos: number;
 }) => api.post('/simpson', payload);
->>>>>>> d873a8ee865b78814d5e93123b1d4a7dc86414c8
