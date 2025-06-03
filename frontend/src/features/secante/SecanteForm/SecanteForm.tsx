@@ -32,8 +32,8 @@ export default function SecanteForm({
                 <MathKeyboard latex={latex} onChange={setLatex} />
               </div>
               <div className="secante-numbers">
-                <NumberInput label="x0 *" value={x0} onChange={setX0} />
-                <NumberInput label="x1 *" value={x1} onChange={setX1} />
+                <NumberInput label="x0 inicial *" value={x0} onChange={setX0} />
+                <NumberInput label="x1 inicial *" value={x1} onChange={setX1} />
                 <NumberInput label="Tolerancia" value={tol} onChange={setTol} />
                 <NumberInput label="Iteraciones" value={iterations} onChange={setIterations} />
 

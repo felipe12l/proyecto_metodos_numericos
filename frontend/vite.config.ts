@@ -25,6 +25,10 @@ export default defineConfig({
       '/jacobi': {
         target: 'http://localhost:3002',
         changeOrigin: true
+      },
+      '/trapecio': {
+        target: 'http://localhost:3007',
+        changeOrigin: true
       }
     }
     

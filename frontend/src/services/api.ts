@@ -41,3 +41,10 @@ export const jacobi = (payload: {
   b: number[];
   error_porcentaje: number;
 }) => api.post('/jacobi', payload);
+
+export const trapecio = (payload: {
+  function : string;
+  a: number; 
+  b: number;
+  n: number; 
+}) => api.post('/trapecio', payload);

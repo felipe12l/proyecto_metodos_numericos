@@ -55,7 +55,7 @@ def jacobi_method(A, b, tol=1e-6, max_iter=100):
 
         x = x_new.copy()
 
-    return x.tolist(), False
+    return x.tolist(), False,m
 
 
 @app.route('/jacobi', methods=['POST'])
@@ -67,6 +67,8 @@ def solve_jacobi():
 
     A = np.array(data["A"], dtype=float)
     b = np.array(data["b"], dtype=float)
+    tol = data.get("tolerance", 1e-6)
+    max_iter = data.get("max_iter", 100)
 
     if not contiene_valores_no_cero(A) or not contiene_valores_no_cero(b):
         return jsonify({"solution": None,
@@ -76,7 +78,7 @@ def solve_jacobi():
     if not is_diagonally_dominant(A):
         A, b = rearrange_to_diagonal_dominance(A, b)
 
-    solution, converged, iteracion = jacobi_method(A, b)
+    solution, converged, iteracion = jacobi_method(A, b, tol, max_iter)
 
     return jsonify({
         "solution": solution,
