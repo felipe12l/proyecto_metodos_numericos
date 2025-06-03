@@ -61,4 +61,8 @@ export const bisection = (payload: {
   b: number;
   error_porcentaje: number;
 }) => api.post('/bisection', payload);
-  
+export const newton = (payload: {
+  funcion: string;
+  x0: number;
+  error_porcentaje: number;
+}) => api.post('/newton_raphson', payload);

@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import numpy as np
+import sympy as sp
 
 app = Flask(__name__)
 
@@ -9,13 +10,22 @@ def newton_raphson():
     data = request.get_json()
 
     # Verificar que se hayan enviado todos los parámetros necesarios.
-    required_fields = ['funcion', 'derivada', 'error_porcentaje', 'xi']
+    required_fields = ['funcion', 'error_porcentaje', 'x0']
     if not data or any(field not in data for field in required_fields):
-        return jsonify({"error": "Faltan parámetros. Se requieren 'funcion', 'derivada', 'error_porcentaje' y 'xi'."}), 400
+        return jsonify({"error": "Faltan parámetros. Se requieren 'funcion', 'error_porcentaje' y 'x0'."}), 400
 
     # Asignar la función y su derivada (en formato de cadena).
     funcion_str = data['funcion']
-    derivada_str = data['derivada']
+    # Nota: No se puede calcular la derivada simbólica directamente con numpy.
+    # Para derivadas simbólicas se debe usar sympy, como está implementado abajo.
+    # Numpy solo sirve para cálculos numéricos, no simbólicos.
+    x = sp.symbols('x')
+    try:
+        funcion_sympy = sp.sympify(funcion_str, locals={'np': np})
+        derivada_sympy = sp.diff(funcion_sympy, x)
+        derivada_str = str(derivada_sympy)
+    except Exception as e:
+        return jsonify({"error": "No se puede calcular la derivada de la función."}), 400
 
     # Validar y convertir 'error_porcentaje' a número.
     try:
@@ -25,7 +35,7 @@ def newton_raphson():
 
     # Validar y convertir 'xi' a número.
     try:
-        xi = float(data['xi'])
+        xi = float(data['x0'])
     except ValueError:
         return jsonify({"error": "El parámetro 'xi' debe ser un número."}), 400
 
@@ -55,9 +65,11 @@ def newton_raphson():
     def f(x):
         try:
             return eval(funcion_str, {"x": x, "np": np})
+        except ZeroDivisionError:
+            raise ValueError("Ocurrió una división por cero durante el cálculo de la función.")
         except Exception as e:
             raise ValueError("Error al evaluar la función.")
-
+        
     def df(x):
         try:
             return eval(derivada_str, {"x": x, "np": np})
@@ -76,8 +88,11 @@ def newton_raphson():
         if dfx == 0:
             return jsonify({"error": "La derivada es cero en x = {}. No se puede continuar.".format(xi)}), 400
 
-        # Aplicar la fórmula de Newton-Raphson.
-        xn = xi - fx / dfx
+        # Aplicar la fórmula de Newton-Raphson con manejo de división por cero.
+        try:
+            xn = xi - fx / dfx
+        except ZeroDivisionError:
+            return jsonify({"error": "Ocurrió una división por cero durante el cálculo en x = {}.".format(xi)}), 400
 
         # Verificar convergencia usando error relativo.
         if xn != 0:
